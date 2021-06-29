@@ -74,8 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				1A5E494A268BBEF700A115C0 /* Info.plist */,
-				1A5E4960268BBF1500A115C0 /* Movie.swift */,
-				1A5E4962268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift */,
+				1A5E4964268BC21C00A115C0 /* Feed */,
 			);
 			path = MovioSuggestedMoviesFeed;
 			sourceTree = "<group>";
@@ -87,6 +86,15 @@
 				1A5E4956268BBEF800A115C0 /* Info.plist */,
 			);
 			path = MovioSuggestedMoviesFeedTests;
+			sourceTree = "<group>";
+		};
+		1A5E4964268BC21C00A115C0 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				1A5E4960268BBF1500A115C0 /* Movie.swift */,
+				1A5E4962268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
