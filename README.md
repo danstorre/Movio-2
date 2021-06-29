@@ -99,10 +99,54 @@ Then the app should display an error message
 #### No connectivity – error course (sad path):
 1. System delivers error.
 
+---
+
+## Flowchart
+
+![Suggested Movies Feed - Flow Chart](https://user-images.githubusercontent.com/12664335/123861612-c4804c00-d8fd-11eb-8404-b6e43fc69272.png)
+
+## Model Specs
+
+### Movie
+
+| Property          | Type                    |
+|-------------------|-------------------------|
+| `id`              | `UUID`                  |
+| `title` 	    | `String`		      |
+| `plot`	    | `String` 		      | 
+| `poster` 	    | `URL` 		      |
 
 
+### Payload contract
 
+```
+GET /discover/movie
 
+2xx RESPONSE
+
+{
+	"results": [
+		{
+			"poster_path": null,
+			"overview": "Go behind the scenes during One Directions sell out \"Take Me Home\" tour and experience life on the road.",
+			"id": 164558,
+			"title": "One Direction: This Is Us",
+		},
+		{
+			"poster_path": null,
+			"overview": "",
+			"id": 654,
+			"title": "On the Waterfront"
+		},
+		...
+	]
+}
+```
+---
+
+## Architecture
+
+![Suggested Movies Feed - Architecture Specs](https://user-images.githubusercontent.com/12664335/123861728-e4177480-d8fd-11eb-928c-2cb292e7af68.png)
 
 
 
