@@ -1,4 +1,4 @@
-# Movio_2.0
+# Movio Case Study
 Search for trending movies by using this app.
 
 ## Suggested Movies Feed Feature Specs
