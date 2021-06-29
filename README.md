@@ -114,7 +114,7 @@ Then the app should display an error message
 | `id`              | `UUID`                  |
 | `title` 	    | `String`		      |
 | `plot`	    | `String` 		      | 
-| `poster` 	    | `URL` 		      |
+| `poster` 	    | `URL` (optional) 		      |
 
 
 ### Payload contract
