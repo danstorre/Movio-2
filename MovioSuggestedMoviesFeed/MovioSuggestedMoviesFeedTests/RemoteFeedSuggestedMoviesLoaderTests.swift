@@ -19,14 +19,6 @@ protocol HTTPClient {
     func getDataFrom(url: URL)
 }
 
-class HTTPClientSpy: HTTPClient {
-    var requestedURL: URL?
-    
-    func getDataFrom(url: URL) {
-        requestedURL = url
-    }
-}
-
 class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
 
     func test_init_doesNotRequestDataFromURL() {
@@ -46,10 +38,17 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     
     // Mark: - Helpers
     
-    func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedSuggestedMoviesLoader, client: HTTPClientSpy) {
+    private func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedSuggestedMoviesLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteFeedSuggestedMoviesLoader(url: url, client: client)
         return (sut, client)
     }
-
+    
+    private class HTTPClientSpy: HTTPClient {
+        var requestedURL: URL?
+        
+        func getDataFrom(url: URL) {
+            requestedURL = url
+        }
+    }
 }
