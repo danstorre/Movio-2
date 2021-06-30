@@ -7,7 +7,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
         
-        XCTAssert(client.requestedURLs.isEmpty)
+        XCTAssert(client.messages.isEmpty)
     }
     
     func test_load_clienRequestsDataFromURL() {
@@ -16,7 +16,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         
         sut.load()
         
-        XCTAssertEqual(client.requestedURLs, [url])
+        XCTAssertEqual(client.messages.map { $0.url }, [url])
     }
     
     func test_load_twice_clienRequestsDataFromURLTwice() {
@@ -26,7 +26,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         sut.load()
         sut.load()
         
-        XCTAssertEqual(client.requestedURLs, [url, url])
+        XCTAssertEqual(client.messages.map { $0.url }, [url, url])
     }
     
     func test_load_deliversConnectivityErrorWhenClientFails() {
@@ -50,16 +50,14 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     }
     
     private class HTTPClientSpy: HTTPClient {
-        var requestedURLs = [URL]()
-        var completions = [((Error) -> Void)]()
+        var messages = [(url: URL, completion:(Error) -> Void)]()
         
         func getDataFrom(url: URL, completion: @escaping (Error) -> Void) {
-            completions.append(completion)
-            requestedURLs.append(url)
+            messages.append((url: url, completion: completion))
         }
         
         func completesWithError(error: NSError, at index: Int = 0) {
-            completions[index](error)
+            messages[index].completion(error)
         }
     }
 }
