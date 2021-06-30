@@ -30,21 +30,26 @@ class HTTPClientSpy: HTTPClient {
 class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
 
     func test_init_doesNotRequestDataFromURL() {
-        let urlToLoad = URL(string: "https://a-url.com")!
-        let httpClient = HTTPClientSpy()
-        let _ = RemoteFeedSuggestedMoviesLoader(url: urlToLoad, client: httpClient)
+        let (_, client) = makeSUT()
         
-        XCTAssertNil(httpClient.requestedURL)
+        XCTAssertNil(client.requestedURL)
     }
     
     func test_load_clientExecutesURLFromRemoteLoader() {
-        let urlToLoad = URL(string: "https://a-url.com")!
-        let httpClient = HTTPClientSpy()
-        let remoteLoader = RemoteFeedSuggestedMoviesLoader(url: urlToLoad, client: httpClient)
+        let url = URL(string: "https://another-url.com")!
+        let (sut, client) = makeSUT(url: url)
         
-        remoteLoader.load()
+        sut.load()
         
-        XCTAssertEqual(httpClient.requestedURL, urlToLoad)
+        XCTAssertEqual(client.requestedURL, url)
+    }
+    
+    // Mark: - Helpers
+    
+    func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedSuggestedMoviesLoader, client: HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = RemoteFeedSuggestedMoviesLoader(url: url, client: client)
+        return (sut, client)
     }
 
 }
