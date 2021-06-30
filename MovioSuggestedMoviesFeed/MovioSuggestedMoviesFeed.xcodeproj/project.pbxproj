@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1A5E4950268BBEF800A115C0 /* MovioSuggestedMoviesFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5E4946268BBEF700A115C0 /* MovioSuggestedMoviesFeed.framework */; };
-		1A5E4955268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4954268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests.swift */; };
 		1A5E4961268BBF1500A115C0 /* FeedSuggestedMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4960268BBF1500A115C0 /* FeedSuggestedMovie.swift */; };
 		1A5E4963268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4962268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift */; };
+		1A5E4966268CDE2200A115C0 /* RemoteFeedSuggestedMoviesLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4965268CDE2200A115C0 /* RemoteFeedSuggestedMoviesLoaderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,10 +27,10 @@
 		1A5E4946268BBEF700A115C0 /* MovioSuggestedMoviesFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MovioSuggestedMoviesFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A5E494A268BBEF700A115C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A5E494F268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovioSuggestedMoviesFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A5E4954268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovioSuggestedMoviesFeedTests.swift; sourceTree = "<group>"; };
 		1A5E4956268BBEF800A115C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A5E4960268BBF1500A115C0 /* FeedSuggestedMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSuggestedMovie.swift; sourceTree = "<group>"; };
 		1A5E4962268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSuggestedMoviesLoader.swift; sourceTree = "<group>"; };
+		1A5E4965268CDE2200A115C0 /* RemoteFeedSuggestedMoviesLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedSuggestedMoviesLoaderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +82,7 @@
 		1A5E4953268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests */ = {
 			isa = PBXGroup;
 			children = (
-				1A5E4954268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests.swift */,
+				1A5E4965268CDE2200A115C0 /* RemoteFeedSuggestedMoviesLoaderTests.swift */,
 				1A5E4956268BBEF800A115C0 /* Info.plist */,
 			);
 			path = MovioSuggestedMoviesFeedTests;
@@ -214,7 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A5E4955268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests.swift in Sources */,
+				1A5E4966268CDE2200A115C0 /* RemoteFeedSuggestedMoviesLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
