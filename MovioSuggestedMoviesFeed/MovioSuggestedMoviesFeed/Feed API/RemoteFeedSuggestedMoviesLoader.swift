@@ -17,7 +17,7 @@ public final class RemoteFeedSuggestedMoviesLoader {
         self.client = client
     }
     
-    public func load(completion: @escaping (Error) -> () = { _ in }) {
+    public func load(completion: @escaping (Error) -> ()) {
         client.getDataFrom(url: url) { _ in
             completion(.noConnectivity)
         }

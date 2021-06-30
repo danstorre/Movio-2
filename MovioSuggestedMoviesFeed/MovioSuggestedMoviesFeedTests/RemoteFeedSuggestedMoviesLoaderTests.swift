@@ -14,7 +14,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         let url = URL(string: "https://another-url.com")!
         let (sut, client) = makeSUT(url: url)
         
-        sut.load()
+        sut.load { _ in }
         
         XCTAssertEqual(client.requestedURLs, [url])
     }
@@ -23,8 +23,8 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         let url = URL(string: "https://yet-another-url.com")!
         let (sut, client) = makeSUT(url: url)
         
-        sut.load()
-        sut.load()
+        sut.load { _ in }
+        sut.load { _ in }
         
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
