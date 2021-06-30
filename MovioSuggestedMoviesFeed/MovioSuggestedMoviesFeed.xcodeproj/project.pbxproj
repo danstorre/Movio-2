@@ -11,6 +11,7 @@
 		1A5E4961268BBF1500A115C0 /* FeedSuggestedMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4960268BBF1500A115C0 /* FeedSuggestedMovie.swift */; };
 		1A5E4963268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4962268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift */; };
 		1A5E4966268CDE2200A115C0 /* RemoteFeedSuggestedMoviesLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4965268CDE2200A115C0 /* RemoteFeedSuggestedMoviesLoaderTests.swift */; };
+		1A5E4969268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4968268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		1A5E4960268BBF1500A115C0 /* FeedSuggestedMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSuggestedMovie.swift; sourceTree = "<group>"; };
 		1A5E4962268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSuggestedMoviesLoader.swift; sourceTree = "<group>"; };
 		1A5E4965268CDE2200A115C0 /* RemoteFeedSuggestedMoviesLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedSuggestedMoviesLoaderTests.swift; sourceTree = "<group>"; };
+		1A5E4968268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedSuggestedMoviesLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,8 +75,9 @@
 		1A5E4948268BBEF700A115C0 /* MovioSuggestedMoviesFeed */ = {
 			isa = PBXGroup;
 			children = (
+				1A5E4967268D2ACC00A115C0 /* Feed API */,
 				1A5E494A268BBEF700A115C0 /* Info.plist */,
-				1A5E4964268BC21C00A115C0 /* Feed */,
+				1A5E4964268BC21C00A115C0 /* Feed Feature */,
 			);
 			path = MovioSuggestedMoviesFeed;
 			sourceTree = "<group>";
@@ -88,13 +91,21 @@
 			path = MovioSuggestedMoviesFeedTests;
 			sourceTree = "<group>";
 		};
-		1A5E4964268BC21C00A115C0 /* Feed */ = {
+		1A5E4964268BC21C00A115C0 /* Feed Feature */ = {
 			isa = PBXGroup;
 			children = (
 				1A5E4960268BBF1500A115C0 /* FeedSuggestedMovie.swift */,
 				1A5E4962268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift */,
 			);
-			path = Feed;
+			path = "Feed Feature";
+			sourceTree = "<group>";
+		};
+		1A5E4967268D2ACC00A115C0 /* Feed API */ = {
+			isa = PBXGroup;
+			children = (
+				1A5E4968268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift */,
+			);
+			path = "Feed API";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A5E4969268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift in Sources */,
 				1A5E4961268BBF1500A115C0 /* FeedSuggestedMovie.swift in Sources */,
 				1A5E4963268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift in Sources */,
 			);

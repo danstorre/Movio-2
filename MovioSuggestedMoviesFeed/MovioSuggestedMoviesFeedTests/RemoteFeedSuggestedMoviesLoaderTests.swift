@@ -1,23 +1,6 @@
 
 import XCTest
-
-class RemoteFeedSuggestedMoviesLoader {
-    let url: URL
-    let client: HTTPClient
-    
-    init(url: URL, client: HTTPClient) {
-        self.url = url
-        self.client = client
-    }
-    
-    func load() {
-        client.getDataFrom(url: url)
-    }
-}
-
-protocol HTTPClient {
-    func getDataFrom(url: URL)
-}
+import MovioSuggestedMoviesFeed
 
 class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
 
