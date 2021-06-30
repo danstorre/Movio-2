@@ -53,7 +53,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         var messages = [(url: URL, completion:(Error) -> Void)]()
         
         func getDataFrom(url: URL, completion: @escaping (Error) -> Void) {
-            messages.append((url: url, completion: completion))
+            messages.append((url, completion))
         }
         
         func completesWithError(error: NSError, at index: Int = 0) {
