@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Movie {
+struct FeedSuggestedMovie {
     let id: UUID
     let title: String
     let plot: String

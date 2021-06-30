@@ -8,7 +8,7 @@
 import Foundation
 
 enum FeedSuggestedMoviesLoaderResult {
-    case success([Movie])
+    case success([FeedSuggestedMovie])
     case error(Error)
 }
 
