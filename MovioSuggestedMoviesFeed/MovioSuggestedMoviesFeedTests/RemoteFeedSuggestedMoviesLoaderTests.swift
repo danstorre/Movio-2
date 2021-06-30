@@ -10,7 +10,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         XCTAssertNil(client.requestedURL)
     }
     
-    func test_load_clientExecutesURLFromRemoteLoader() {
+    func test_load_clienRequestsDataFromURL() {
         let url = URL(string: "https://another-url.com")!
         let (sut, client) = makeSUT(url: url)
         
