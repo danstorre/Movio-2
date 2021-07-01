@@ -33,8 +33,8 @@ public final class RemoteFeedSuggestedMoviesLoader {
             switch result {
             case let .success(response: response, data: data):
                 if response.statusCode == 200,
-                   let root = try? JSONDecoder().decode(RootFeedSuggestedMovies.self, from: data) {
-                    completion(.success(root.items))
+                   let items = try? RemoteFeedSuggestedMoviesParser.parse(data: data) {
+                    completion(.success(items))
                 } else {
                     completion(.failure(.invalidData))
                 }
@@ -42,6 +42,12 @@ public final class RemoteFeedSuggestedMoviesLoader {
                 completion(.failure(.noConnectivity))
             }
         }
+    }
+}
+
+private class RemoteFeedSuggestedMoviesParser {
+    static func parse(data: Data) throws -> [FeedSuggestedMovie] {
+        return try JSONDecoder().decode(RootFeedSuggestedMovies.self, from: data).items
     }
 }
 
