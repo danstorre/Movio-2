@@ -75,11 +75,12 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
             }
         }
         
-        let json = Data("{\"results\": []".utf8) 
+        let jsonResults = ["results": []]
+        
+        let json = try! JSONSerialization.data(withJSONObject: jsonResults)
         client.completesWith(code: 200, data: json)
         
         XCTAssertNotNil(capturedSuggestedMovies)
-        XCTAssertTrue(capturedSuggestedMovies!.isEmpty)
     }
     
     func test_load_deliversItemsWhenReceivingJSONWithItems() {
@@ -102,19 +103,19 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
                                                  plot: "A movie about someone's life in jail and his breakout.",
                                                  poster: URL(string: "http://the-image-url.com")!)
         
-        let suggestedMovies = [suggestedMovie1]
+        let suggestedMovies = [suggestedMovie1, suggestedMovie2]
         
         let item1json = [
             "id": suggestedMovie1.id.uuidString,
             "title": suggestedMovie1.title,
-            "plot": suggestedMovie1.plot
+            "overview": suggestedMovie1.plot
         ]
         
         let item2json = [
             "id": suggestedMovie2.id.uuidString,
             "title": suggestedMovie2.title,
-            "plot": suggestedMovie2.plot,
-            "poster": suggestedMovie2.poster!.absoluteString
+            "overview": suggestedMovie2.plot,
+            "poster_path": suggestedMovie2.poster!.absoluteString
         ]
         
         let arrayOfItems = [item1json, item2json]
