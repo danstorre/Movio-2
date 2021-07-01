@@ -82,6 +82,52 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         XCTAssertTrue(capturedSuggestedMovies!.isEmpty)
     }
     
+    func test_load_deliversItemsWhenReceivingJSONWithItems() {
+        let (sut, client) = makeSUT()
+        
+        var capturedSuggestedMovies: [FeedSuggestedMovie]?
+        sut.load { result in
+            if case let .success(movies) = result {
+                capturedSuggestedMovies = movies
+            }
+        }
+        
+        let suggestedMovie1 = FeedSuggestedMovie(id: UUID(),
+                                                 title: "Star wars",
+                                                 plot: "A big story around stars and their wars",
+                                                 poster: nil)
+        
+        let suggestedMovie2 = FeedSuggestedMovie(id: UUID(),
+                                                 title: "Shawshenk Redemption",
+                                                 plot: "A movie about someone's life in jail and his breakout.",
+                                                 poster: URL(string: "http://the-image-url.com")!)
+        
+        let suggestedMovies = [suggestedMovie1]
+        
+        let item1json = [
+            "id": suggestedMovie1.id.uuidString,
+            "title": suggestedMovie1.title,
+            "plot": suggestedMovie1.plot
+        ]
+        
+        let item2json = [
+            "id": suggestedMovie2.id.uuidString,
+            "title": suggestedMovie2.title,
+            "plot": suggestedMovie2.plot,
+            "poster": suggestedMovie2.poster!.absoluteString
+        ]
+        
+        let arrayOfItems = [item1json, item2json]
+        
+        let jsonResults = ["results": arrayOfItems]
+        
+        let json = try! JSONSerialization.data(withJSONObject: jsonResults)
+        client.completesWith(code: 200, data: json)
+        
+        XCTAssertNotNil(capturedSuggestedMovies)
+        XCTAssertEqual(capturedSuggestedMovies, suggestedMovies)
+    }
+    
     // Mark: - Helpers
     
     private func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedSuggestedMoviesLoader, client: HTTPClientSpy) {
