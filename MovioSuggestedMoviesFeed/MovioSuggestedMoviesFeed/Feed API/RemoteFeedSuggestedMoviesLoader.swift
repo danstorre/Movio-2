@@ -24,8 +24,13 @@ public final class RemoteFeedSuggestedMoviesLoader {
     }
     
     public func load(completion: @escaping (Error) -> ()) {
-        client.getDataFrom(url: url) { _ in
-            completion(.noConnectivity)
+        client.getDataFrom(url: url) { result in
+            switch result {
+            case .success:
+                completion(.invalidData)
+            case .failure:
+                completion(.noConnectivity)
+            }
         }
     }
 }

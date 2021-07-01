@@ -80,6 +80,13 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         }
         
         func completesWith(code: Int, at index: Int = 0) {
+            let url = messages[index].url
+            let httpResponse = HTTPURLResponse(url: url,
+                                               statusCode: code,
+                                               httpVersion: nil,
+                                               headerFields: nil)!
+            
+            messages[index].completion(.success(response: httpResponse))
         }
     }
 }
