@@ -65,18 +65,18 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     }
     
     private class HTTPClientSpy: HTTPClient {
-        var messages = [(url: URL, completion:(Error) -> Void)]()
+        var messages = [(url: URL, completion:(HTTPRequestResult) -> Void)]()
         
         var requestedURLs: [URL] {
             messages.map { $0.url }
         }
         
-        func getDataFrom(url: URL, completion: @escaping (Error) -> Void) {
+        func getDataFrom(url: URL, completion: @escaping (HTTPRequestResult) -> Void) {
             messages.append((url, completion))
         }
         
         func completesWithError(error: NSError, at index: Int = 0) {
-            messages[index].completion(error)
+            messages[index].completion(.failure(error: error))
         }
         
         func completesWith(code: Int, at index: Int = 0) {

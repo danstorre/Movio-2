@@ -1,7 +1,12 @@
 import Foundation
 
+public enum HTTPRequestResult {
+    case success(response: HTTPURLResponse)
+    case failure(error: Error)
+}
+
 public protocol HTTPClient {
-    func getDataFrom(url: URL, completion: @escaping (Error) -> Void)
+    func getDataFrom(url: URL, completion: @escaping (HTTPRequestResult) -> Void)
 }
 
 public final class RemoteFeedSuggestedMoviesLoader {
