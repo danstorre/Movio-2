@@ -1,7 +1,7 @@
 import Foundation
 
 public enum HTTPRequestResult {
-    case success(response: HTTPURLResponse)
+    case success(response: HTTPURLResponse, data: Data)
     case failure(error: Error)
 }
 
@@ -19,7 +19,7 @@ public final class RemoteFeedSuggestedMoviesLoader {
     }
     
     public enum FeedSuggestedMoviesResult {
-        case success
+        case success([FeedSuggestedMovie])
         case failure(Error)
     }
     
@@ -31,8 +31,12 @@ public final class RemoteFeedSuggestedMoviesLoader {
     public func load(completion: @escaping (FeedSuggestedMoviesResult) -> ()) {
         client.getDataFrom(url: url) { result in
             switch result {
-            case .success:
-                completion(.failure(.invalidData))
+            case let .success(response: response, data: _):
+                if response.statusCode == 200 {
+                    completion(.success([]))
+                } else {
+                    completion(.failure(.invalidData))
+                }
             case .failure:
                 completion(.failure(.noConnectivity))
             }

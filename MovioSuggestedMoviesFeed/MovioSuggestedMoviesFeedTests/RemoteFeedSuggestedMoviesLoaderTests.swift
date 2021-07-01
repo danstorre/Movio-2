@@ -66,13 +66,20 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     }
     
     func test_load_deliversEmptyListWhenReceivingJSONEmptyList() {
-        let (sut, _) = makeSUT()
+        let (sut, client) = makeSUT()
         
-        var _: [FeedSuggestedMovie]?
+        var capturedSuggestedMovies: [FeedSuggestedMovie]?
         sut.load { result in
-            if case .success = result {
+            if case let .success(movies) = result {
+                capturedSuggestedMovies = movies
             }
         }
+        
+        let json = Data("{\"results\": []".utf8) 
+        client.completesWith(code: 200, data: json)
+        
+        XCTAssertNotNil(capturedSuggestedMovies)
+        XCTAssertTrue(capturedSuggestedMovies!.isEmpty)
     }
     
     // Mark: - Helpers
@@ -98,14 +105,14 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
             messages[index].completion(.failure(error: error))
         }
         
-        func completesWith(code: Int, at index: Int = 0) {
+        func completesWith(code: Int, data: Data = Data(), at index: Int = 0) {
             let url = messages[index].url
             let httpResponse = HTTPURLResponse(url: url,
                                                statusCode: code,
                                                httpVersion: nil,
                                                headerFields: nil)!
             
-            messages[index].completion(.success(response: httpResponse))
+            messages[index].completion(.success(response: httpResponse, data: data))
         }
     }
 }
