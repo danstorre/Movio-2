@@ -35,7 +35,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         var capturedErrors = [RemoteFeedSuggestedMoviesLoader.Error]()
         sut.load { capturedErrors.append($0) }
         
-        let clientError = NSError(domain: "error", code: 400, userInfo: nil)
+        let clientError = NSError(domain: "error", code: 0, userInfo: nil)
         client.completesWithError(error: clientError)
         
         XCTAssertEqual(capturedErrors, [.noConnectivity])
