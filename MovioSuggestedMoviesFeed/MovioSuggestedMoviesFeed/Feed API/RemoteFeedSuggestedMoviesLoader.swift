@@ -10,6 +10,7 @@ public final class RemoteFeedSuggestedMoviesLoader {
     
     public enum Error: Swift.Error {
         case noConnectivity
+        case invalidData
     }
     
     public init(url: URL, client: HTTPClient) {
