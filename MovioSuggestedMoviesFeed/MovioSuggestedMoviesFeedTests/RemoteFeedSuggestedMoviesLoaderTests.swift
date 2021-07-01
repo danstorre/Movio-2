@@ -41,6 +41,21 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         XCTAssertEqual(capturedErrors, [.noConnectivity])
     }
     
+    func test_load_deliversInvalidDataOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        
+        let errorSamples = [199,201,300,400,500]
+        _ = errorSamples.enumerated().map { (index, sampleError) in
+            var capturedErrors = [RemoteFeedSuggestedMoviesLoader.Error]()
+            
+            sut.load { capturedErrors.append($0) }
+            
+            client.completesWith(code: sampleError, at: index)
+            
+            XCTAssertEqual(capturedErrors, [.invalidData])
+        }
+    }
+    
     // Mark: - Helpers
     
     private func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedSuggestedMoviesLoader, client: HTTPClientSpy) {
@@ -62,6 +77,9 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         
         func completesWithError(error: NSError, at index: Int = 0) {
             messages[index].completion(error)
+        }
+        
+        func completesWith(code: Int, at index: Int = 0) {
         }
     }
 }
