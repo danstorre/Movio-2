@@ -45,12 +45,12 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         let (sut, client) = makeSUT()
         
         let errorSamples = [199,201,300,400,500]
-        _ = errorSamples.enumerated().map { (index, sampleError) in
+        _ = errorSamples.enumerated().map { (index, errorCode) in
             var capturedErrors = [RemoteFeedSuggestedMoviesLoader.Error]()
             
             sut.load { capturedErrors.append($0) }
             
-            client.completesWith(code: sampleError, at: index)
+            client.completesWith(code: errorCode, at: index)
             
             XCTAssertEqual(capturedErrors, [.invalidData])
         }
