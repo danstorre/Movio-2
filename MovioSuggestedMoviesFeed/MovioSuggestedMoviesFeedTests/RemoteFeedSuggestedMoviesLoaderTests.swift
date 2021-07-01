@@ -32,18 +32,10 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     func test_load_deliversConnectivityErrorWhenClientFails() {
         let (sut, client) = makeSUT()
         
-        var capturedErrors = [RemoteFeedSuggestedMoviesLoader.Error]()
-        
-        sut.load { errorResult in
-            if case let .failure(error) = errorResult {
-                capturedErrors.append(error)
-            }
-        }
-        
-        let clientError = NSError(domain: "error", code: 0, userInfo: nil)
-        client.completesWithError(error: clientError)
-        
-        XCTAssertEqual(capturedErrors, [.noConnectivity])
+        expect(sut: sut, completesWith: .failure(.noConnectivity), when: {
+            let clientError = NSError(domain: "error", code: 0, userInfo: nil)
+            client.completesWithError(error: clientError)
+        })
     }
     
     func test_load_deliversInvalidDataOnNon200HTTPResponse() {
@@ -51,48 +43,27 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         
         let errorSamples = [199,201,300,400,500]
         _ = errorSamples.enumerated().map { (index, errorCode) in
-            var capturedErrors = [RemoteFeedSuggestedMoviesLoader.Error]()
-            
-            sut.load { errorResult in
-                if case let .failure(error) = errorResult {
-                    capturedErrors.append(error)
-                }
-            }
-            
-            client.completesWith(code: errorCode, at: index)
-            
-            XCTAssertEqual(capturedErrors, [.invalidData])
+            expect(sut: sut, completesWith: .failure(.invalidData), when: {
+                client.completesWith(code: errorCode, at: index)
+            })
         }
     }
     
     func test_load_deliversEmptyListWhenReceivingJSONEmptyList() throws {
         let (sut, client) = makeSUT()
-        
-        var capturedSuggestedMovies: [FeedSuggestedMovie]?
-        sut.load { result in
-            if case let .success(movies) = result {
-                capturedSuggestedMovies = movies
-            }
-        }
-        
+
         let jsonResults = ["results": []]
         
         let json = try makeData(with: jsonResults)
-        client.completesWith(code: 200, data: json)
         
-        XCTAssertNotNil(capturedSuggestedMovies)
+        expect(sut: sut, completesWith: .success([]), when: {
+            client.completesWith(code: 200, data: json)
+        })
     }
     
     func test_load_deliversItemsWhenReceivingJSONWithItems() throws {
         let (sut, client) = makeSUT()
-        
-        var capturedSuggestedMovies: [FeedSuggestedMovie]?
-        sut.load { result in
-            if case let .success(movies) = result {
-                capturedSuggestedMovies = movies
-            }
-        }
-        
+
         let (suggestedMovie1, item1json) = makeItem(
             id: UUID(),
             title: "Star wars",
@@ -106,16 +77,13 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
             poster: URL(string: "http://the-image-url.com")!
         )
         
-        let dict = ["results": [item1json, item2json]]
-        
-        let json = try makeData(with: dict)
-        
-        client.completesWith(code: 200, data: json)
+        let json = try makeData(with: ["results": [item1json, item2json]])
         
         let suggestedMovies = [suggestedMovie1, suggestedMovie2]
         
-        XCTAssertNotNil(capturedSuggestedMovies)
-        XCTAssertEqual(capturedSuggestedMovies, suggestedMovies)
+        expect(sut: sut, completesWith: .success(suggestedMovies), when: {
+            client.completesWith(code: 200, data: json)
+        })
     }
     
     // Mark: - Helpers
@@ -142,6 +110,22 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         ].compactMapValues { $0 }
         
         return (item, json)
+    }
+    
+    private func expect(
+        sut: RemoteFeedSuggestedMoviesLoader,
+        completesWith result: RemoteFeedSuggestedMoviesLoader.Result,
+        when completion: @escaping () -> Void,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        var capturedResults = [RemoteFeedSuggestedMoviesLoader.Result]()
+        
+        sut.load { capturedResults.append($0) }
+        
+        completion()
+        
+        XCTAssertEqual(capturedResults, [result], file: file, line: line)
     }
     
     private func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedSuggestedMoviesLoader, client: HTTPClientSpy) {

@@ -18,7 +18,7 @@ public final class RemoteFeedSuggestedMoviesLoader {
         case invalidData
     }
     
-    public enum FeedSuggestedMoviesResult {
+    public enum Result: Equatable {
         case success([FeedSuggestedMovie])
         case failure(Error)
     }
@@ -28,7 +28,7 @@ public final class RemoteFeedSuggestedMoviesLoader {
         self.client = client
     }
     
-    public func load(completion: @escaping (FeedSuggestedMoviesResult) -> ()) {
+    public func load(completion: @escaping (Result) -> ()) {
         client.getDataFrom(url: url) { result in
             switch result {
             case let .success(response: response, data: data):
