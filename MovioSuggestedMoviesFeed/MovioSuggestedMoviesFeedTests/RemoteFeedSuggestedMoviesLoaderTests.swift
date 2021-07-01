@@ -103,7 +103,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
             id: UUID(),
             title: "Shawshenk Redemption",
             plot: "A movie about someone's life in jail and his breakout.",
-            poster: URL(string: "http://the-image-url.com")
+            poster: URL(string: "http://the-image-url.com")!
         )
         
         let dict = ["results": [item1json, item2json]]
