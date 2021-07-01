@@ -32,10 +32,11 @@ public final class RemoteFeedSuggestedMoviesLoader {
         client.getDataFrom(url: url) { result in
             switch result {
             case let .success(response: response, data: data):
-                if response.statusCode == 200,
-                   let items = try? RemoteFeedSuggestedMoviesParser.parse(data: data) {
+                do {
+                    let items = try RemoteFeedSuggestedMoviesParser.parse(data: data,
+                                                                          response: response)
                     completion(.success(items))
-                } else {
+                } catch {
                     completion(.failure(.invalidData))
                 }
             case .failure:
@@ -46,33 +47,37 @@ public final class RemoteFeedSuggestedMoviesLoader {
 }
 
 private class RemoteFeedSuggestedMoviesParser {
-    static func parse(data: Data) throws -> [FeedSuggestedMovie] {
+    private struct RootFeedSuggestedMovies: Decodable {
+        private let results: [RemoteFeedSuggestedMovie]
+        
+        var items: [FeedSuggestedMovie] {
+            results.map { $0.feedItems }
+        }
+    }
+
+    private struct RemoteFeedSuggestedMovie: Decodable {
+        private let id: UUID
+        private let title: String
+        private let plot: String
+        private let poster: URL?
+        
+        private enum CodingKeys: String, CodingKey {
+            case id
+            case title
+            case plot = "overview"
+            case poster = "poster_path"
+        }
+        
+        var feedItems: FeedSuggestedMovie {
+            FeedSuggestedMovie(id: id, title: title, plot: plot, poster: poster)
+        }
+    }
+    
+    static func parse(data: Data, response: HTTPURLResponse) throws -> [FeedSuggestedMovie] {
+        guard response.statusCode == 200 else {
+            throw RemoteFeedSuggestedMoviesLoader.Error.invalidData
+        }
+        
         return try JSONDecoder().decode(RootFeedSuggestedMovies.self, from: data).items
-    }
-}
-
-private struct RootFeedSuggestedMovies: Decodable {
-    private let results: [RemoteFeedSuggestedMovie]
-    
-    var items: [FeedSuggestedMovie] {
-        results.map { $0.feedItems }
-    }
-}
-
-private struct RemoteFeedSuggestedMovie: Decodable {
-    private let id: UUID
-    private let title: String
-    private let plot: String
-    private let poster: URL?
-    
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case title
-        case plot = "overview"
-        case poster = "poster_path"
-    }
-    
-    var feedItems: FeedSuggestedMovie {
-        FeedSuggestedMovie(id: id, title: title, plot: plot, poster: poster)
     }
 }
