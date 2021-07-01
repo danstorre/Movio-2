@@ -33,7 +33,12 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         let (sut, client) = makeSUT()
         
         var capturedErrors = [RemoteFeedSuggestedMoviesLoader.Error]()
-        sut.load { capturedErrors.append($0) }
+        
+        sut.load { errorResult in
+            if case let .failure(error) = errorResult {
+                capturedErrors.append(error)
+            }
+        }
         
         let clientError = NSError(domain: "error", code: 0, userInfo: nil)
         client.completesWithError(error: clientError)
@@ -48,11 +53,25 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         _ = errorSamples.enumerated().map { (index, errorCode) in
             var capturedErrors = [RemoteFeedSuggestedMoviesLoader.Error]()
             
-            sut.load { capturedErrors.append($0) }
+            sut.load { errorResult in
+                if case let .failure(error) = errorResult {
+                    capturedErrors.append(error)
+                }
+            }
             
             client.completesWith(code: errorCode, at: index)
             
             XCTAssertEqual(capturedErrors, [.invalidData])
+        }
+    }
+    
+    func test_load_deliversEmptyListWhenReceivingJSONEmptyList() {
+        let (sut, _) = makeSUT()
+        
+        var _: [FeedSuggestedMovie]?
+        sut.load { result in
+            if case .success = result {
+            }
         }
     }
     
