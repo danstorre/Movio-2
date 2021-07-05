@@ -28,11 +28,13 @@ internal class RemoteFeedSuggestedMoviesParser {
         }
     }
     
-    static func parse(data: Data, response: HTTPURLResponse) throws -> [FeedSuggestedMovie] {
-        guard response.statusCode == 200 else {
-            throw RemoteFeedSuggestedMoviesLoader.Error.invalidData
+    static func map(response: HTTPURLResponse, data: Data, completion: @escaping (RemoteFeedSuggestedMoviesLoader.Result) -> ()) {
+        guard response.statusCode == 200,
+              let items = try? JSONDecoder().decode(RootFeedSuggestedMovies.self, from: data).items else {
+            completion(.failure(.invalidData))
+            return
         }
         
-        return try JSONDecoder().decode(RootFeedSuggestedMovies.self, from: data).items
+        completion(.success(items))
     }
 }
