@@ -1,0 +1,38 @@
+
+import Foundation
+
+internal class RemoteFeedSuggestedMoviesParser {
+    private struct RootFeedSuggestedMovies: Decodable {
+        private let results: [RemoteFeedSuggestedMovie]
+        
+        var items: [FeedSuggestedMovie] {
+            results.map { $0.feedItems }
+        }
+    }
+
+    private struct RemoteFeedSuggestedMovie: Decodable {
+        private let id: UUID
+        private let title: String
+        private let plot: String
+        private let poster: URL?
+        
+        private enum CodingKeys: String, CodingKey {
+            case id
+            case title
+            case plot = "overview"
+            case poster = "poster_path"
+        }
+        
+        var feedItems: FeedSuggestedMovie {
+            FeedSuggestedMovie(id: id, title: title, plot: plot, poster: poster)
+        }
+    }
+    
+    static func parse(data: Data, response: HTTPURLResponse) throws -> [FeedSuggestedMovie] {
+        guard response.statusCode == 200 else {
+            throw RemoteFeedSuggestedMoviesLoader.Error.invalidData
+        }
+        
+        return try JSONDecoder().decode(RootFeedSuggestedMovies.self, from: data).items
+    }
+}

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A20A23F2693340400BB3E91 /* RemoteFeedSuggestedMoviesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A20A23E2693340400BB3E91 /* RemoteFeedSuggestedMoviesParser.swift */; };
 		1A5E4950268BBEF800A115C0 /* MovioSuggestedMoviesFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5E4946268BBEF700A115C0 /* MovioSuggestedMoviesFeed.framework */; };
 		1A5E4961268BBF1500A115C0 /* FeedSuggestedMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4960268BBF1500A115C0 /* FeedSuggestedMovie.swift */; };
 		1A5E4963268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4962268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A20A23E2693340400BB3E91 /* RemoteFeedSuggestedMoviesParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedSuggestedMoviesParser.swift; sourceTree = "<group>"; };
 		1A5E4946268BBEF700A115C0 /* MovioSuggestedMoviesFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MovioSuggestedMoviesFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A5E494A268BBEF700A115C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A5E494F268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovioSuggestedMoviesFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				1A5E4968268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift */,
+				1A20A23E2693340400BB3E91 /* RemoteFeedSuggestedMoviesParser.swift */,
 			);
 			path = "Feed API";
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 				1A5E4969268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift in Sources */,
 				1A5E4961268BBF1500A115C0 /* FeedSuggestedMovie.swift in Sources */,
 				1A5E4963268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift in Sources */,
+				1A20A23F2693340400BB3E91 /* RemoteFeedSuggestedMoviesParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
