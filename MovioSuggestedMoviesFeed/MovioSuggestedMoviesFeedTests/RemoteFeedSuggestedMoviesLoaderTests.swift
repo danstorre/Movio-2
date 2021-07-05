@@ -152,8 +152,8 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         let client = HTTPClientSpy()
         let sut = RemoteFeedSuggestedMoviesLoader(url: url, client: client)
         
-        trackForMemoryLeak(instance: client)
-        trackForMemoryLeak(instance: sut)
+        trackForMemoryLeak(instance: client, file: file, line: line)
+        trackForMemoryLeak(instance: sut, file: file, line: line)
         
         return (sut, client)
     }
