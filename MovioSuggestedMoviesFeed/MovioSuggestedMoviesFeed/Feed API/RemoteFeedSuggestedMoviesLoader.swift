@@ -1,14 +1,5 @@
 import Foundation
 
-public enum HTTPRequestResult {
-    case success(response: HTTPURLResponse, data: Data)
-    case failure(error: Error)
-}
-
-public protocol HTTPClient {
-    func getDataFrom(url: URL, completion: @escaping (HTTPRequestResult) -> Void)
-}
-
 public final class RemoteFeedSuggestedMoviesLoader {
     private let url: URL
     private let client: HTTPClient
