@@ -52,9 +52,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     func test_load_deliversEmptyListWhenReceivingJSONEmptyList() throws {
         let (sut, client) = makeSUT()
 
-        let jsonResults = ["results": []]
-        
-        let json = try makeData(with: jsonResults)
+        let json = try makeResultJSON(with: [])
         
         expect(sut: sut, completesWith: .success([]), when: {
             client.completesWith(code: 200, data: json)
@@ -77,7 +75,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
             poster: URL(string: "http://the-image-url.com")!
         )
         
-        let json = try makeData(with: ["results": [item1json, item2json]])
+        let json = try makeResultJSON(with: [item1json, item2json])
         
         let suggestedMovies = [suggestedMovie1, suggestedMovie2]
         
@@ -87,8 +85,9 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     }
     
     // Mark: - Helpers
-    private func makeData(with json: [String: Any]) throws -> Data {
-        try JSONSerialization.data(withJSONObject: json)
+    private func makeResultJSON(with items: [[String: Any]]) throws -> Data {
+        let resultJson = ["results": items]
+        return try JSONSerialization.data(withJSONObject: resultJson)
     }
     
     private func makeItem(
