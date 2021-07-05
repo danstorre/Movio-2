@@ -158,10 +158,11 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         return (sut, client)
     }
     
-    func trackForMemoryLeak(instance: AnyObject,
-                            file: StaticString = #filePath,
-                            line: UInt = #line)
-    {
+    private func trackForMemoryLeak(
+        instance: AnyObject,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
         addTeardownBlock { [weak instance] in
             XCTAssertNil(
                 instance,
