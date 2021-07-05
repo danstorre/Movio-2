@@ -85,6 +85,22 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         })
     }
     
+    func test_load_doesNotDeliverItemsWhenDeallocated() throws {
+        let url = URL(string: "http://a-url.com")!
+        let client = HTTPClientSpy()
+        var sut: RemoteFeedSuggestedMoviesLoader? = RemoteFeedSuggestedMoviesLoader(url: url, client: client)
+        
+        var capturedResults = [RemoteFeedSuggestedMoviesLoader.Result]()
+        sut?.load {
+            capturedResults.append($0)
+        }
+        sut = nil
+        
+        client.completesWith(code: 200, data: try makeResultJSON(with: []))
+        
+        XCTAssertTrue(capturedResults.isEmpty)
+    }
+    
     // Mark: - Helpers
     private func makeResultJSON(with items: [[String: Any]]) throws -> Data {
         let resultJson = ["results": items]

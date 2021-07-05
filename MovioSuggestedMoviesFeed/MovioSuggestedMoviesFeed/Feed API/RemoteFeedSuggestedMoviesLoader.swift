@@ -21,7 +21,9 @@ public final class RemoteFeedSuggestedMoviesLoader {
     }
     
     public func load(completion: @escaping (Result) -> ()) {
-        client.getDataFrom(url: url) { result in
+        client.getDataFrom(url: url) { [weak self] result in
+            guard self != nil else { return }
+            
             switch result {
             case let .success(response: response, data: data):
                 RemoteFeedSuggestedMoviesParser.map(response: response, data: data, completion: completion)
