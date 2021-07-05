@@ -144,10 +144,32 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         XCTAssertEqual(capturedResults, [result], file: file, line: line)
     }
     
-    private func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedSuggestedMoviesLoader, client: HTTPClientSpy) {
+    private func makeSUT(
+        url: URL = URL(string: "https://a-url.com")!,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) -> (sut: RemoteFeedSuggestedMoviesLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteFeedSuggestedMoviesLoader(url: url, client: client)
+        
+        trackForMemoryLeak(instance: client)
+        trackForMemoryLeak(instance: sut)
+        
         return (sut, client)
+    }
+    
+    func trackForMemoryLeak(instance: AnyObject,
+                            file: StaticString = #filePath,
+                            line: UInt = #line)
+    {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(
+                instance,
+                "instance should be nil. potential memory leak.",
+                file: file,
+                line: line
+            )
+        }
     }
     
     private class HTTPClientSpy: HTTPClient {
