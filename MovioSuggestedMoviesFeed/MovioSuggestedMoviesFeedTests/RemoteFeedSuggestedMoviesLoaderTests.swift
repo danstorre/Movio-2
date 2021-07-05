@@ -44,7 +44,8 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         let errorSamples = [199,201,300,400,500]
         _ = errorSamples.enumerated().map { (index, errorCode) in
             expect(sut: sut, completesWith: .failure(.invalidData), when: {
-                client.completesWith(code: errorCode, at: index)
+                let json = Data("invalid json".utf8)
+                client.completesWith(code: errorCode, data: json, at: index)
             })
         }
     }
@@ -82,6 +83,18 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         expect(sut: sut, completesWith: .success(suggestedMovies), when: {
             client.completesWith(code: 200, data: json)
         })
+    }
+    
+    func test_load_doesNotDeliverResultWhenDeallocated() {
+        let url = URL(string: "http://a-url.com")!
+        let client = HTTPClientSpy()
+        var sut: RemoteFeedSuggestedMoviesLoader? = RemoteFeedSuggestedMoviesLoader(url: url, client: client)
+        
+        sut?.load { _ in }
+        sut = nil
+        
+        client.completesWith(code: 200)
+        
     }
     
     // Mark: - Helpers
@@ -148,7 +161,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
             messages[index].completion(.failure(error: error))
         }
         
-        func completesWith(code: Int, data: Data = Data(), at index: Int = 0) {
+        func completesWith(code: Int, data: Data, at index: Int = 0) {
             let url = messages[index].url
             let httpResponse = HTTPURLResponse(url: url,
                                                statusCode: code,
