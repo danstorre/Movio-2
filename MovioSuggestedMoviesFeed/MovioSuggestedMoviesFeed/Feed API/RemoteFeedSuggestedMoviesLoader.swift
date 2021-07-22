@@ -1,7 +1,7 @@
 
 import Foundation
 
-public final class RemoteFeedSuggestedMoviesLoader {
+public final class RemoteFeedSuggestedMoviesLoader: FeedSuggestedMoviesLoader {
     private let url: URL
     private let client: HTTPClient
     
