@@ -130,18 +130,28 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     
     private func expect(
         sut: RemoteFeedSuggestedMoviesLoader,
-        completesWith result: RemoteFeedSuggestedMoviesLoader.Result<RemoteFeedSuggestedMoviesLoader.Error>,
+        completesWith expectedResults: RemoteFeedSuggestedMoviesLoader.Result<RemoteFeedSuggestedMoviesLoader.Error>,
         when completion: @escaping () -> Void,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        var capturedResults = [RemoteFeedSuggestedMoviesLoader.Result<RemoteFeedSuggestedMoviesLoader.Error>]()
+        let exp = XCTestExpectation(description: "waiting to load items")
         
-        sut.load { capturedResults.append($0) }
+        sut.load { receivedResults in
+            switch (receivedResults, expectedResults) {
+            case let (.success(receivedItems), .success(expectedItems)):
+                XCTAssertEqual(receivedItems, expectedItems, "expected items to be equal", file: file, line: line)
+            case let (.failure(receivedError), .failure(expectedError)):
+                XCTAssertEqual(receivedError, expectedError, "expected errors to be equal", file: file, line: line)
+            default:
+                XCTFail("received Results are different from the ones expected")
+            }
+            exp.fulfill()
+        }
         
         completion()
         
-        XCTAssertEqual(capturedResults, [result], file: file, line: line)
+        wait(for: [exp], timeout: 1.0)
     }
     
     private func makeSUT(

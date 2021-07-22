@@ -6,8 +6,6 @@ public enum FeedSuggestedMoviesLoaderResult<Error: Swift.Error> {
     case failure(Error)
 }
 
-extension FeedSuggestedMoviesLoaderResult: Equatable where Error: Equatable {}
-
 protocol FeedSuggestedMoviesLoader {
     associatedtype T: Swift.Error
     func load(completion: @escaping (FeedSuggestedMoviesLoaderResult<T>) -> Void)
