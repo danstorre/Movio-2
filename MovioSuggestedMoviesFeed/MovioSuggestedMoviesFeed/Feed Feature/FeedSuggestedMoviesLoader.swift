@@ -1,12 +1,11 @@
 
 import Foundation
 
-public enum FeedSuggestedMoviesLoaderResult<Error: Swift.Error> {
+public enum FeedSuggestedMoviesLoaderResult {
     case success([FeedSuggestedMovie])
     case failure(Error)
 }
 
 protocol FeedSuggestedMoviesLoader {
-    associatedtype T: Swift.Error
-    func load(completion: @escaping (FeedSuggestedMoviesLoaderResult<T>) -> Void)
+    func load(completion: @escaping (FeedSuggestedMoviesLoaderResult) -> Void)
 }

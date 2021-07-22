@@ -17,7 +17,7 @@ public final class RemoteFeedSuggestedMoviesLoader: FeedSuggestedMoviesLoader {
         self.client = client
     }
     
-    public func load(completion: @escaping (Result<Error>) -> ()) {
+    public func load(completion: @escaping (Result) -> ()) {
         client.getDataFrom(url: url) { [weak self] result in
             guard self != nil else { return }
             
@@ -25,7 +25,7 @@ public final class RemoteFeedSuggestedMoviesLoader: FeedSuggestedMoviesLoader {
             case let .success(response: response, data: data):
                 RemoteFeedSuggestedMoviesParser.map(response: response, data: data, completion: completion)
             case .failure:
-                completion(.failure(.noConnectivity))
+                completion(.failure(Error.noConnectivity))
             }
         }
     }

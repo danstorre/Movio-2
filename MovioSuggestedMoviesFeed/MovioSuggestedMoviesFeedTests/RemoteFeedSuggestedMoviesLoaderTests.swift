@@ -32,7 +32,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     func test_load_deliversConnectivityErrorWhenClientFails() {
         let (sut, client) = makeSUT()
         
-        expect(sut: sut, completesWith: .failure(.noConnectivity), when: {
+        expect(sut: sut, completesWith: .failure(RemoteFeedSuggestedMoviesLoader.Error.noConnectivity), when: {
             let clientError = NSError(domain: "error", code: 0, userInfo: nil)
             client.completesWithError(error: clientError)
         })
@@ -43,7 +43,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         
         let errorSamples = [199,201,300,400,500]
         _ = errorSamples.enumerated().map { (index, errorCode) in
-            expect(sut: sut, completesWith: .failure(.invalidData), when: {
+            expect(sut: sut, completesWith: .failure(RemoteFeedSuggestedMoviesLoader.Error.invalidData), when: {
                 let json = Data("invalid json".utf8)
                 client.completesWith(code: errorCode, data: json, at: index)
             })
@@ -90,7 +90,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         let client = HTTPClientSpy()
         var sut: RemoteFeedSuggestedMoviesLoader? = RemoteFeedSuggestedMoviesLoader(url: url, client: client)
         
-        var capturedResults = [RemoteFeedSuggestedMoviesLoader.Result<RemoteFeedSuggestedMoviesLoader.Error>]()
+        var capturedResults = [RemoteFeedSuggestedMoviesLoader.Result]()
         sut?.load {
             capturedResults.append($0)
         }
@@ -130,7 +130,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     
     private func expect(
         sut: RemoteFeedSuggestedMoviesLoader,
-        completesWith expectedResults: RemoteFeedSuggestedMoviesLoader.Result<RemoteFeedSuggestedMoviesLoader.Error>,
+        completesWith expectedResults: RemoteFeedSuggestedMoviesLoader.Result,
         when completion: @escaping () -> Void,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -141,7 +141,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
             switch (receivedResults, expectedResults) {
             case let (.success(receivedItems), .success(expectedItems)):
                 XCTAssertEqual(receivedItems, expectedItems, "expected items to be equal", file: file, line: line)
-            case let (.failure(receivedError), .failure(expectedError)):
+            case let (.failure(receivedError as RemoteFeedSuggestedMoviesLoader.Error), .failure(expectedError as RemoteFeedSuggestedMoviesLoader.Error)):
                 XCTAssertEqual(receivedError, expectedError, "expected errors to be equal", file: file, line: line)
             default:
                 XCTFail("received Results are different from the ones expected")

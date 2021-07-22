@@ -28,10 +28,10 @@ internal class RemoteFeedSuggestedMoviesParser {
         }
     }
     
-    static func map(response: HTTPURLResponse, data: Data, completion: @escaping (RemoteFeedSuggestedMoviesLoader.Result<RemoteFeedSuggestedMoviesLoader.Error>) -> ()) {
+    static func map(response: HTTPURLResponse, data: Data, completion: @escaping (RemoteFeedSuggestedMoviesLoader.Result) -> ()) {
         guard response.statusCode == 200,
               let items = try? JSONDecoder().decode(RootFeedSuggestedMovies.self, from: data).items else {
-            completion(.failure(.invalidData))
+            completion(.failure(RemoteFeedSuggestedMoviesLoader.Error.invalidData))
             return
         }
         
