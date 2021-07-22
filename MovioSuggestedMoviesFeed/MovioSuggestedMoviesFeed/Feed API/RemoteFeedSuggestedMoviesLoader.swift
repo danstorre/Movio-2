@@ -10,17 +10,14 @@ public final class RemoteFeedSuggestedMoviesLoader {
         case invalidData
     }
     
-    public enum Result: Equatable {
-        case success([FeedSuggestedMovie])
-        case failure(Error)
-    }
+    public typealias Result = FeedSuggestedMoviesLoaderResult
     
     public init(url: URL, client: HTTPClient) {
         self.url = url
         self.client = client
     }
     
-    public func load(completion: @escaping (Result) -> ()) {
+    public func load(completion: @escaping (Result<Error>) -> ()) {
         client.getDataFrom(url: url) { [weak self] result in
             guard self != nil else { return }
             

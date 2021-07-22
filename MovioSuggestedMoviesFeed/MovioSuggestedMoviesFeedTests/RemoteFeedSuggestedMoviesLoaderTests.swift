@@ -90,7 +90,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         let client = HTTPClientSpy()
         var sut: RemoteFeedSuggestedMoviesLoader? = RemoteFeedSuggestedMoviesLoader(url: url, client: client)
         
-        var capturedResults = [RemoteFeedSuggestedMoviesLoader.Result]()
+        var capturedResults = [RemoteFeedSuggestedMoviesLoader.Result<RemoteFeedSuggestedMoviesLoader.Error>]()
         sut?.load {
             capturedResults.append($0)
         }
@@ -130,12 +130,12 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     
     private func expect(
         sut: RemoteFeedSuggestedMoviesLoader,
-        completesWith result: RemoteFeedSuggestedMoviesLoader.Result,
+        completesWith result: RemoteFeedSuggestedMoviesLoader.Result<RemoteFeedSuggestedMoviesLoader.Error>,
         when completion: @escaping () -> Void,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        var capturedResults = [RemoteFeedSuggestedMoviesLoader.Result]()
+        var capturedResults = [RemoteFeedSuggestedMoviesLoader.Result<RemoteFeedSuggestedMoviesLoader.Error>]()
         
         sut.load { capturedResults.append($0) }
         
