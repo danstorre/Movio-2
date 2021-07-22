@@ -32,7 +32,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
     func test_load_deliversConnectivityErrorWhenClientFails() {
         let (sut, client) = makeSUT()
         
-        expect(sut: sut, completesWith: .failure(RemoteFeedSuggestedMoviesLoader.Error.noConnectivity), when: {
+        expect(sut: sut, completesWith: failure(.noConnectivity), when: {
             let clientError = NSError(domain: "error", code: 0, userInfo: nil)
             client.completesWithError(error: clientError)
         })
@@ -43,7 +43,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         
         let errorSamples = [199,201,300,400,500]
         _ = errorSamples.enumerated().map { (index, errorCode) in
-            expect(sut: sut, completesWith: .failure(RemoteFeedSuggestedMoviesLoader.Error.invalidData), when: {
+            expect(sut: sut, completesWith: failure(.invalidData), when: {
                 let json = Data("invalid json".utf8)
                 client.completesWith(code: errorCode, data: json, at: index)
             })
@@ -152,6 +152,10 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         completion()
         
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func failure(_ error: RemoteFeedSuggestedMoviesLoader.Error) -> RemoteFeedSuggestedMoviesLoader.Result {
+        .failure(error)
     }
     
     private func makeSUT(
