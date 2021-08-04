@@ -26,7 +26,7 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         
         let clientError = NSError(domain: "a domain error from Network", code: 1)
         
-        URLProtocolStub.stub(url: url, data: nil, response: nil, error: clientError)
+        URLProtocolStub.stub(data: nil, response: nil, error: clientError)
         
         let sut = URLSessionHTTPClient()
         
@@ -48,7 +48,7 @@ class HTTPSessionHTTPClientTests: XCTestCase {
     }
     
     private class URLProtocolStub: URLProtocol {
-        static var stubs = [URL: Stub]()
+        static var stubs: Stub?
         
         struct Stub {
             let data: Data?
@@ -56,8 +56,8 @@ class HTTPSessionHTTPClientTests: XCTestCase {
             let error: Error?
         }
         
-        static func stub(url: URL, data: Data?, response: URLResponse?, error: Error? = nil) {
-            stubs[url] = Stub(data: data, response: response, error: error)
+        static func stub(data: Data?, response: URLResponse?, error: Error? = nil) {
+            stubs = Stub(data: data, response: response, error: error)
         }
         
         static func startInterceptingRequests() {
@@ -69,10 +69,7 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         }
         
         override static func canInit(with request: URLRequest) -> Bool {
-            guard let url = request.url else {
-                return false
-            }
-            return stubs[url] != nil
+            return true
         }
         
         override static func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -80,7 +77,7 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         }
         
         override func startLoading() {
-            guard let url = request.url, let stub = URLProtocolStub.stubs[url] else {
+            guard let stub = URLProtocolStub.stubs else {
                 return
             }
             
