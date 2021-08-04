@@ -37,7 +37,7 @@ class HTTPSessionHTTPClientTests: XCTestCase {
     }
     
     func test_getFromURL_performsTheCorrectGETRequestWithURL() {
-        let url = URL(string: "http://a-url.com")!
+        let url = anyURL()
         
         let exp = XCTestExpectation(description: "wait for url")
         
@@ -54,20 +54,18 @@ class HTTPSessionHTTPClientTests: XCTestCase {
     }
     
     func test_getFromURL_deliversErrorOnRequestError() {
-        let url = URL(string: "http://a-url.com")!
-        
         let clientError = NSError(domain: "a domain error from Network", code: 1)
         
         URLProtocolStub.stub(data: nil, response: nil, error: clientError)
         
         let sut = URLSessionHTTPClient()
         
-        let exp = XCTestExpectation(description: "wait for expectation")
-        sut.getDataFrom(url: url) { result in
+        let exp = XCTestExpectation(description: "wait for failure")
+        sut.getDataFrom(url: anyURL()) { result in
             switch result {
             case let .failure(receivedError as NSError):
-                XCTAssertEqual( receivedError.domain, clientError.domain)
-                XCTAssertEqual( receivedError.code, clientError.code)
+                XCTAssertEqual(receivedError.domain, clientError.domain)
+                XCTAssertEqual(receivedError.code, clientError.code)
             default:
                 XCTFail("expected to receive \(clientError), got \(result) instead.")
             }
@@ -79,13 +77,11 @@ class HTTPSessionHTTPClientTests: XCTestCase {
     }
     
     func test_getFromURL_deliversFailureWhenAllValuesAreNil() {
-        let url = URL(string: "http://a-url.com")!
-        
         URLProtocolStub.stub(data: nil, response: nil, error: nil)
         
         let exp = XCTestExpectation(description: "wait for failure")
         
-        URLSessionHTTPClient().getDataFrom(url: url) { result in
+        URLSessionHTTPClient().getDataFrom(url: anyURL()) { result in
             switch result {
             case .failure:
                 break
@@ -97,6 +93,12 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         }
         
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    
+    // MARK: - Helper Methods
+    private func anyURL() -> URL {
+        URL(string: "http://a-url.com")!
     }
     
     private class URLProtocolStub: URLProtocol {
