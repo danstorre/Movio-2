@@ -48,7 +48,7 @@ class HTTPSessionHTTPClientTests: XCTestCase {
             exp.fulfill()
         }
         
-        URLSessionHTTPClient().getDataFrom(url: url) { _ in }
+        makeSUT().getDataFrom(url: url) { _ in }
         
         wait(for: [exp], timeout: 1.0)
     }
@@ -71,19 +71,23 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         URL(string: "http://a-url.com")!
     }
     
-    private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?) -> Error? {
+    private func makeSUT() -> URLSessionHTTPClient {
+        URLSessionHTTPClient()
+    }
+    
+    private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> Error? {
         URLProtocolStub.stub(data: data, response: response, error: error)
         
         let exp = XCTestExpectation(description: "wait for failure")
         
         var capturedError: Error?
         
-        URLSessionHTTPClient().getDataFrom(url: anyURL()) { result in
+        makeSUT().getDataFrom(url: anyURL()) { result in
             switch result {
             case let .failure(error):
                 capturedError = error
             default:
-                XCTFail("Expected failure, got \(result) instead.")
+                XCTFail("Expected failure, got \(result) instead.", file: file, line: line)
             }
             
             exp.fulfill()
