@@ -2,7 +2,7 @@
 import XCTest
 import MovioSuggestedMoviesFeed
 
-class HTTPSessionHTTPClient {
+class URLSessionHTTPClient {
     let session: URLSession
     
     init(session: URLSession = .shared) {
@@ -20,7 +20,7 @@ class HTTPSessionHTTPClient {
 
 class HTTPSessionHTTPClientTests: XCTestCase {
     
-    func test_getDataFrom_deliversFailureWithErrorWhenSessionFails() {
+    func test_getFromURL_deliversErrorOnRequestError() {
         URLProtocolStub.startInterceptingRequests()
         let url = URL(string: "http://a-url.com")!
         
@@ -28,7 +28,7 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         
         URLProtocolStub.stub(url: url, data: nil, response: nil, error: clientError)
         
-        let sut = HTTPSessionHTTPClient()
+        let sut = URLSessionHTTPClient()
         
         let exp = XCTestExpectation(description: "wait for expectation")
         sut.getDataFrom(url: url) { result in
