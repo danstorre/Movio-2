@@ -71,9 +71,9 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         URL(string: "http://a-url.com")!
     }
     
-    private func makeSUT() -> URLSessionHTTPClient {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> URLSessionHTTPClient {
         let sut = URLSessionHTTPClient()
-        trackForMemoryLeak(instance: sut)
+        trackForMemoryLeak(instance: sut, file: file, line: line)
         return sut
     }
     
@@ -90,7 +90,7 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         
         var capturedError: Error?
         
-        makeSUT().getDataFrom(url: anyURL()) { result in
+        makeSUT(file: file, line: line).getDataFrom(url: anyURL()) { result in
             switch result {
             case let .failure(error):
                 capturedError = error
