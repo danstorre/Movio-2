@@ -12,9 +12,11 @@ class URLSessionHTTPClient {
     struct UnexpectedErrorOnInvalidValues: Error {}
     
     func getDataFrom(url: URL, completion: @escaping (HTTPRequestResult) -> Void) {
-        session.dataTask(with: url, completionHandler: {_,_,error in
+        session.dataTask(with: url, completionHandler: {data,response,error in
             if let error = error {
                 completion(.failure(error: error))
+            } else if let data = data, data.count > 0, let response = response as? HTTPURLResponse {
+                completion(.success(response: response, data: data))
             } else {
                 completion(.failure(error: UnexpectedErrorOnInvalidValues()))
             }
@@ -73,6 +75,30 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: nonHTTPURLResponse(), error: anyNSError()))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyHTTPURLResponse(), error: anyNSError()))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: nonHTTPURLResponse(), error: nil))
+    }
+    
+    func test_getFromURL_deliversResultOnDataAndHTTPResponse() {
+        let data = anyData()
+        let response = anyHTTPURLResponse()
+        
+        URLProtocolStub.stub(data: data, response: response, error: nil)
+        
+        let exp = XCTestExpectation(description: "wait for result")
+        
+        makeSUT().getDataFrom(url: anyURL()) { result in
+            switch result {
+            case let .success(response: receivedResponse, data: receivedData):
+                XCTAssertEqual(response.statusCode, receivedResponse.statusCode)
+                XCTAssertEqual(response.url, receivedResponse.url)
+                XCTAssertEqual(data, receivedData)
+            default:
+                XCTFail("Expected success, got \(result) instead.")
+            }
+            
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     // MARK: - Helper Methods
