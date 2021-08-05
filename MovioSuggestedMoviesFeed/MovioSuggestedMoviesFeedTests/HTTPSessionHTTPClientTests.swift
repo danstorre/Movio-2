@@ -138,7 +138,7 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         
         var capturedDataAndResponse: (Data, HTTPURLResponse)!
     
-        makeSUT().getDataFrom(url: anyURL()) { result in
+        makeSUT(file: file, line: line).getDataFrom(url: anyURL()) { result in
             switch result {
             case let .success(response: receivedResponse, data: receivedData):
                 capturedDataAndResponse = (receivedData, receivedResponse)
