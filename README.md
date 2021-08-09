@@ -1,4 +1,4 @@
-# Movio Case Study
+# Movio
 Search for trending movies by using this app.
 
 ## Suggested Movies Feed Feature Specs
