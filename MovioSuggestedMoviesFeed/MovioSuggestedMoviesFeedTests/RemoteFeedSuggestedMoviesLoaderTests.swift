@@ -144,7 +144,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
             case let (.failure(receivedError as RemoteFeedSuggestedMoviesLoader.Error), .failure(expectedError as RemoteFeedSuggestedMoviesLoader.Error)):
                 XCTAssertEqual(receivedError, expectedError, "expected errors to be equal", file: file, line: line)
             default:
-                XCTFail("received Results are different from the ones expected")
+                XCTFail("received Results are different from the ones expected", file: file, line: line)
             }
             exp.fulfill()
         }
