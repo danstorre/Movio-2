@@ -16,10 +16,20 @@
 		1A5E4966268CDE2200A115C0 /* RemoteFeedSuggestedMoviesLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4965268CDE2200A115C0 /* RemoteFeedSuggestedMoviesLoaderTests.swift */; };
 		1A5E4969268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4968268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift */; };
 		1A672C3426C1CCC900B3656A /* XCTesting+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A672C3326C1CCC900B3656A /* XCTesting+MemoryLeakTracking.swift */; };
+		1A672C3C26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A672C3B26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.swift */; };
+		1A672C3E26C1CDF500B3656A /* MovioSuggestedMoviesFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5E4946268BBEF700A115C0 /* MovioSuggestedMoviesFeed.framework */; };
+		1A672C4526C1CE7F00B3656A /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A672C4426C1CE7F00B3656A /* URLSessionHTTPClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		1A5E4951268BBEF800A115C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A5E493D268BBEF700A115C0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1A5E4945268BBEF700A115C0;
+			remoteInfo = MovioSuggestedMoviesFeed;
+		};
+		1A672C3F26C1CDF500B3656A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1A5E493D268BBEF700A115C0 /* Project object */;
 			proxyType = 1;
@@ -41,6 +51,10 @@
 		1A5E4965268CDE2200A115C0 /* RemoteFeedSuggestedMoviesLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedSuggestedMoviesLoaderTests.swift; sourceTree = "<group>"; };
 		1A5E4968268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedSuggestedMoviesLoader.swift; sourceTree = "<group>"; };
 		1A672C3326C1CCC900B3656A /* XCTesting+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTesting+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		1A672C3926C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovioSuggestedMoviesEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A672C3B26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovioSuggestedMoviesEndToEndTests.swift; sourceTree = "<group>"; };
+		1A672C3D26C1CDF500B3656A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1A672C4426C1CE7F00B3656A /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +73,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1A672C3626C1CDF500B3656A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A672C3E26C1CDF500B3656A /* MovioSuggestedMoviesFeed.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -67,6 +89,7 @@
 			children = (
 				1A5E4948268BBEF700A115C0 /* MovioSuggestedMoviesFeed */,
 				1A5E4953268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests */,
+				1A672C3A26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests */,
 				1A5E4947268BBEF700A115C0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -76,6 +99,7 @@
 			children = (
 				1A5E4946268BBEF700A115C0 /* MovioSuggestedMoviesFeed.framework */,
 				1A5E494F268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests.xctest */,
+				1A672C3926C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -116,6 +140,7 @@
 				1A5E4968268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift */,
 				1A20A23E2693340400BB3E91 /* RemoteFeedSuggestedMoviesParser.swift */,
 				1A20A2402693349600BB3E91 /* HTTPClient.swift */,
+				1A672C4426C1CE7F00B3656A /* URLSessionHTTPClient.swift */,
 			);
 			path = "Feed API";
 			sourceTree = "<group>";
@@ -126,6 +151,15 @@
 				1A672C3326C1CCC900B3656A /* XCTesting+MemoryLeakTracking.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		1A672C3A26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests */ = {
+			isa = PBXGroup;
+			children = (
+				1A672C3B26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.swift */,
+				1A672C3D26C1CDF500B3656A /* Info.plist */,
+			);
+			path = MovioSuggestedMoviesEndToEndTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +211,24 @@
 			productReference = 1A5E494F268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		1A672C3826C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A672C4126C1CDF500B3656A /* Build configuration list for PBXNativeTarget "MovioSuggestedMoviesEndToEndTests" */;
+			buildPhases = (
+				1A672C3526C1CDF500B3656A /* Sources */,
+				1A672C3626C1CDF500B3656A /* Frameworks */,
+				1A672C3726C1CDF500B3656A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1A672C4026C1CDF500B3656A /* PBXTargetDependency */,
+			);
+			name = MovioSuggestedMoviesEndToEndTests;
+			productName = MovioSuggestedMoviesEndToEndTests;
+			productReference = 1A672C3926C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -191,6 +243,9 @@
 						LastSwiftMigration = 1250;
 					};
 					1A5E494E268BBEF800A115C0 = {
+						CreatedOnToolsVersion = 12.5;
+					};
+					1A672C3826C1CDF500B3656A = {
 						CreatedOnToolsVersion = 12.5;
 					};
 				};
@@ -210,6 +265,7 @@
 			targets = (
 				1A5E4945268BBEF700A115C0 /* MovioSuggestedMoviesFeed */,
 				1A5E494E268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests */,
+				1A672C3826C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests */,
 			);
 		};
 /* End PBXProject section */
@@ -229,6 +285,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1A672C3726C1CDF500B3656A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -241,6 +304,7 @@
 				1A5E4961268BBF1500A115C0 /* FeedSuggestedMovie.swift in Sources */,
 				1A5E4963268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift in Sources */,
 				1A20A23F2693340400BB3E91 /* RemoteFeedSuggestedMoviesParser.swift in Sources */,
+				1A672C4526C1CE7F00B3656A /* URLSessionHTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +318,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1A672C3526C1CDF500B3656A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A672C3C26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -261,6 +333,11 @@
 			isa = PBXTargetDependency;
 			target = 1A5E4945268BBEF700A115C0 /* MovioSuggestedMoviesFeed */;
 			targetProxy = 1A5E4951268BBEF800A115C0 /* PBXContainerItemProxy */;
+		};
+		1A672C4026C1CDF500B3656A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1A5E4945268BBEF700A115C0 /* MovioSuggestedMoviesFeed */;
+			targetProxy = 1A672C3F26C1CDF500B3656A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -475,6 +552,42 @@
 			};
 			name = Release;
 		};
+		1A672C4226C1CDF500B3656A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = AEWQUX8MPM;
+				INFOPLIST_FILE = MovioSuggestedMoviesEndToEndTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dansteam.MovioSuggestedMoviesEndToEndTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		1A672C4326C1CDF500B3656A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = AEWQUX8MPM;
+				INFOPLIST_FILE = MovioSuggestedMoviesEndToEndTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dansteam.MovioSuggestedMoviesEndToEndTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -501,6 +614,15 @@
 			buildConfigurations = (
 				1A5E495E268BBEF800A115C0 /* Debug */,
 				1A5E495F268BBEF800A115C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1A672C4126C1CDF500B3656A /* Build configuration list for PBXNativeTarget "MovioSuggestedMoviesEndToEndTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A672C4226C1CDF500B3656A /* Debug */,
+				1A672C4326C1CDF500B3656A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

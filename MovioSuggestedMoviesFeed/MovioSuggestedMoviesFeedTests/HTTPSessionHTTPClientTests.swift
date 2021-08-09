@@ -2,28 +2,6 @@
 import XCTest
 import MovioSuggestedMoviesFeed
 
-class URLSessionHTTPClient {
-    let session: URLSession
-    
-    init(session: URLSession = .shared) {
-        self.session = session
-    }
-    
-    struct UnexpectedErrorOnInvalidValues: Error {}
-    
-    func getDataFrom(url: URL, completion: @escaping (HTTPRequestResult) -> Void) {
-        session.dataTask(with: url, completionHandler: {data,response,error in
-            if let error = error {
-                completion(.failure(error: error))
-            } else if let data = data, let response = response as? HTTPURLResponse {
-                completion(.success(response: response, data: data))
-            } else {
-                completion(.failure(error: UnexpectedErrorOnInvalidValues()))
-            }
-        }).resume()
-    }
-}
-
 class HTTPSessionHTTPClientTests: XCTestCase {
     
     override func setUp() {
@@ -119,7 +97,7 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         NSError(domain: "a domain error", code: 1, userInfo: nil)
     }
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> URLSessionHTTPClient {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> HTTPClient {
         let sut = URLSessionHTTPClient()
         trackForMemoryLeak(instance: sut, file: file, line: line)
         return sut
