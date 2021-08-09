@@ -5,6 +5,22 @@ import MovioSuggestedMoviesFeed
 class MovioSuggestedMoviesEndToEndTests: XCTestCase {
 
     func test_endToEndServerGETSuggestedMoviesResult_matchesTheMoviesTestData () {
+        switch suggestedMoviesResult() {
+        case let .success(items)?:
+            XCTAssertEqual(items.count, 2)
+            
+            XCTAssertEqual(items[0], expectedItem(at: 0))
+            XCTAssertEqual(items[1], expectedItem(at: 1))
+            
+        case let .failure(error)?:
+            XCTFail("Expected result to be successful, got \(error) instead")
+        default:
+            XCTFail("Expected result to be successful, got no result instead")
+        }
+    }
+    
+    // MARK: Helper methods
+    private func suggestedMoviesResult() -> FeedSuggestedMoviesLoaderResult? {
         let testURL = URL(string: "https://movio.free.beeceptor.com/suggestedMovies")!
         let client = URLSessionHTTPClient()
         let remoteSuggestedMovies = RemoteFeedSuggestedMoviesLoader(url: testURL, client: client)
@@ -18,22 +34,8 @@ class MovioSuggestedMoviesEndToEndTests: XCTestCase {
         }
         
         wait(for: [exp], timeout: 15.0)
-        
-        switch receivedResult {
-        case let .success(items):
-            XCTAssertEqual(items.count, 2)
-            
-            XCTAssertEqual(items[0], expectedItem(at: 0))
-            XCTAssertEqual(items[1], expectedItem(at: 1))
-            
-        case let .failure(error):
-            XCTFail("Expected result to be successful, got \(error) instead")
-        default:
-            XCTFail("Expected result to be successful, got no result instead")
-        }
+        return receivedResult
     }
-    
-    // MARK: Helper methods
     
     private func expectedItem(at index: Int) -> FeedSuggestedMovie {
         FeedSuggestedMovie(id: id(at: index),
