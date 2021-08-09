@@ -1,0 +1,21 @@
+name: Swift
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Select XCode
+      run: sudo xcode-select -switch /Applications/Xcode_12.4.app
+
+    - name: Build and Test
+      run: xcbuild clean build test -project MovioSuggestedMoviesFeed/MovioSuggestedMoviesFeed.xcodeproj -scheme CI CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
