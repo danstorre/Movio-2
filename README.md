@@ -1,3 +1,5 @@
+[![CI](https://github.com/danstorre/Movio_2.0/actions/workflows/CI.yml/badge.svg)](https://github.com/danstorre/Movio_2.0/actions/workflows/CI.yml)
+
 # Movio
 Search for trending movies by using this app.
 
