@@ -29,8 +29,8 @@ internal class RemoteFeedSuggestedMoviesParser {
         
         init(from decoder: Decoder) throws {
             let values = try decoder.container(keyedBy: CodingKeys.self)
-            let idString = try values.decode(String.self, forKey: .id)
-            id = UUID(uuidString: idString)!
+            let idNumber = try values.decode(String.self, forKey: .id)
+            id = UUID(uuidString: String(describing: idNumber))!
             self.title = try values.decode(String.self, forKey: .title)
             self.plot = try values.decode(String.self, forKey: .plot)
             if let posterString = try? values.decode(String.self, forKey: .poster) {
