@@ -125,12 +125,6 @@ class HTTPSessionHTTPClientTests: XCTestCase {
         return sut
     }
     
-    private func trackForMemoryLeak(instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
-        addTeardownBlock { [weak instance] in
-            XCTAssertNil(instance, "instance should be nil. potential memory leak.", file: file, line: line)
-        }
-    }
-    
     private func resultValuesFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> (data: Data, response: HTTPURLResponse) {
         let result = resultFor(data: data, response: response, error: error, file: file, line: line)
         
