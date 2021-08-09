@@ -26,6 +26,19 @@ internal class RemoteFeedSuggestedMoviesParser {
         var feedItems: FeedSuggestedMovie {
             FeedSuggestedMovie(id: id, title: title, plot: plot, poster: poster)
         }
+        
+        init(from decoder: Decoder) throws {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            let idString = try values.decode(String.self, forKey: .id)
+            id = UUID(uuidString: idString)!
+            self.title = try values.decode(String.self, forKey: .title)
+            self.plot = try values.decode(String.self, forKey: .plot)
+            if let posterString = try? values.decode(String.self, forKey: .poster) {
+                poster = URL(string: posterString)
+            } else {
+                poster = nil
+            }
+        }
     }
     
     static func map(response: HTTPURLResponse, data: Data, completion: @escaping (RemoteFeedSuggestedMoviesLoader.Result) -> ()) {
