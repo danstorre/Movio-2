@@ -18,7 +18,7 @@ internal class RemoteFeedSuggestedMoviesParser {
         
         private enum CodingKeys: String, CodingKey {
             case id
-            case title
+            case title = "original_title"
             case plot = "overview"
             case poster = "poster_path"
         }

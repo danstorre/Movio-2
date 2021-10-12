@@ -22,7 +22,7 @@ class MovioSuggestedMoviesEndToEndTests: XCTestCase {
     // MARK: Helper methods
     private func suggestedMoviesResult() -> FeedSuggestedMoviesLoaderResult? {
         let testURL = URL(string: "https://movio.free.beeceptor.com/suggestedMovies")!
-        let client = URLSessionHTTPClient()
+        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
         let remoteSuggestedMovies = RemoteFeedSuggestedMoviesLoader(url: testURL, client: client)
         
         let exp = expectation(description: "wait for completion from the remote")

@@ -120,7 +120,7 @@ class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
         
         let json = [
             "id": item.id.uuidString,
-            "title": item.title,
+            "original_title": item.title,
             "overview": item.plot,
             "poster_path": item.poster?.absoluteString
         ].compactMapValues { $0 }
