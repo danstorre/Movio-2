@@ -97,22 +97,23 @@ Then the app should display an error message
 
 ---
 
-### Save Suggested Movies Feed Use Case
+### Cache Suggested Movies Use Case
 
 #### Data:
 - Suggested Movies
 
 #### Primary course (happy path):
 1. Execute "Save Feed Items" command with above data.
-2. System encodes feed items.
-3. System timestamps the new cache.
-4. System replaces the cache with new data.
-5. System delivers a success message.
+2. System deletes old cache.
+3. System encodes feed items.
+4. System timestamps the new cache.
+5. System saves new cache.
+6. System delivers a success message.
 
-#### Invalid data – error course (sad path):
+#### Saving error course (sad path):
 1. System delivers error.
 
-#### No connectivity – error course (sad path):
+#### Deletion error course (sad path):
 1. System delivers error.
 
 ---
