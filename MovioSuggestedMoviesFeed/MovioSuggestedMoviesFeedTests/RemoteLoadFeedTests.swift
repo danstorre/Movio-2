@@ -2,7 +2,7 @@
 import XCTest
 import MovioSuggestedMoviesFeed
 
-class RemoteFeedSuggestedMoviesLoaderTests: XCTestCase {
+class RemoteLoadFeedTests: XCTestCase {
 
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
