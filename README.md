@@ -24,17 +24,26 @@ And replace the cache with the new feed
 
 ### Narrative #2
 
+```
 As an offline customer
 I want the app to show the latest saved version of the suggested movies feed
 So I can always enjoy the suggested movies
+```
 
 #### Scenarios (Acceptance criteria)
 
 ```
 Given the customer doesn't have connectivity
 And there’s a cached version of the feed
+And the cache is less than seven days old
 When the customer requests to see the feed
 Then the app should display the latest feed saved
+
+Given the customer doesn't have connectivity
+And there’s a cached version of the feed
+And the cache is more than seven days old
+When the customer requests to see the feed
+Then the app should display an error message
 
 Given the customer doesn't have connectivity
 And the cache is empty
