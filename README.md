@@ -92,9 +92,6 @@ Then the app should display an error message
 #### No cache course (sad path):
 1. System delivers no feed items.
 
-#### No connectivity – error course (sad path):
-1. System delivers error.
-
 ---
 
 ### Cache Suggested Movies Use Case
