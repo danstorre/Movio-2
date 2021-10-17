@@ -73,7 +73,7 @@ Then the app should display an error message
 
 ---
 
-### Load Suggested Movies Feed Fallback (Cache) Use Case
+### Load Cache from Suggested Movies Use Case
 
 #### Data:
 - No input
@@ -81,8 +81,13 @@ Then the app should display an error message
 #### Primary course (happy path):
 1. Execute "Load Suggested Movies Feed" command with above data.
 2. System fetches feed data from cache.
-3. System creates feed items from cached data.
-4. System delivers feed items.
+3. System validates the cache is less than seven days old.
+4. System creates feed items from cached data.
+5. System delivers feed items.
+
+### expired cache course (sad path):
+1. System deletes cache.
+2. System delivers no feed items.
 
 #### No cache course (sad path):
 1. System delivers no feed items.
