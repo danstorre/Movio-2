@@ -85,7 +85,10 @@ Then the app should display an error message
 4. System creates feed items from cached data.
 5. System delivers feed items.
 
-### expired cache course (sad path):
+### Error course course (sad path):
+1. System delivers error.
+
+### Expired cache course (sad path):
 1. System deletes cache.
 2. System delivers no feed items.
 
