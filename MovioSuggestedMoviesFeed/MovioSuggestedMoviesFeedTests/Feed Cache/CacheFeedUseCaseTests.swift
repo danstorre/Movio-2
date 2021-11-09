@@ -7,18 +7,35 @@ class LocalFeedLoader {
     init(store: FeedStore) {
         self.store = store
     }
+    
+    func save() {
+        store.deleteCache()
+    }
 }
 
 class FeedStore {
-    var messagesCount = 0
+    var deleteMessagesCount = 0
+    
+    func deleteCache() {
+        deleteMessagesCount += 1
+    }
 }
 
 class CacheFeedUseCaseTests: XCTestCase {
 
-    func test_init_doesNotMessageToTheStore() {
+    func test_init_doesNotMessageToTheFeedStore() {
         let store = FeedStore()
         let _ = LocalFeedLoader(store: store)
         
-        XCTAssertEqual(store.messagesCount, 0)
+        XCTAssertEqual(store.deleteMessagesCount, 0)
+    }
+    
+    func test_save_deletesTheOldCacheFromFeedStore() {
+        let store = FeedStore()
+        let sut = LocalFeedLoader(store: store)
+        
+        sut.save()
+        
+        XCTAssertEqual(store.deleteMessagesCount, 1)
     }
 }
