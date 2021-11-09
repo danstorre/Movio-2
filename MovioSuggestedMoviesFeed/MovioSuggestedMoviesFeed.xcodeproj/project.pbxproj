@@ -19,6 +19,7 @@
 		1A672C3C26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A672C3B26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.swift */; };
 		1A672C3E26C1CDF500B3656A /* MovioSuggestedMoviesFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5E4946268BBEF700A115C0 /* MovioSuggestedMoviesFeed.framework */; };
 		1A672C4526C1CE7F00B3656A /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A672C4426C1CE7F00B3656A /* URLSessionHTTPClient.swift */; };
+		1A9E775B273AA94D00AB2ADD /* CacheFeedUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9E775A273AA94D00AB2ADD /* CacheFeedUseCaseTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		1A672C3B26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovioSuggestedMoviesEndToEndTests.swift; sourceTree = "<group>"; };
 		1A672C3D26C1CDF500B3656A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A672C4426C1CE7F00B3656A /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
+		1A9E775A273AA94D00AB2ADD /* CacheFeedUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheFeedUseCaseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 		1A9E7759273AA92900AB2ADD /* Feed Cache */ = {
 			isa = PBXGroup;
 			children = (
+				1A9E775A273AA94D00AB2ADD /* CacheFeedUseCaseTests.swift */,
 			);
 			path = "Feed Cache";
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				1A672C3426C1CCC900B3656A /* XCTesting+MemoryLeakTracking.swift in Sources */,
 				1A3A80D226B3499E00AC23C2 /* HTTPSessionHTTPClientTests.swift in Sources */,
 				1A5E4966268CDE2200A115C0 /* LoadFeedFromRemoteUseCaseTests.swift in Sources */,
+				1A9E775B273AA94D00AB2ADD /* CacheFeedUseCaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
