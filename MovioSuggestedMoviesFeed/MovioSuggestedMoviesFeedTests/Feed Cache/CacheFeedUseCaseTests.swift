@@ -8,16 +8,26 @@ class LocalFeedLoader {
         self.store = store
     }
     
-    func save() {
-        store.deleteCache()
+    func save(completion: @escaping (Error?) -> Void) {
+        store.deleteCache(completion: completion)
     }
 }
 
 class FeedStore {
+    typealias DeletionCacheCompletion = (Error?) -> Void
+    
     var deleteMessagesCount = 0
     
-    func deleteCache() {
+    private var deleteCompletions = [DeletionCacheCompletion]()
+    
+    func deleteCache(completion: @escaping DeletionCacheCompletion) {
         deleteMessagesCount += 1
+        
+        deleteCompletions.append(completion)
+    }
+    
+    func completeWith(deletionError: NSError, at index: Int = 0) {
+        deleteCompletions[index](deletionError)
     }
 }
 
@@ -34,8 +44,29 @@ class CacheFeedUseCaseTests: XCTestCase {
         let store = FeedStore()
         let sut = LocalFeedLoader(store: store)
         
-        sut.save()
+        sut.save() { _ in}
         
         XCTAssertEqual(store.deleteMessagesCount, 1)
+    }
+    
+    func test_save_deliversErrorOnDeletionError() {
+        let deletionError = anyNSError()
+        let store = FeedStore()
+        let sut = LocalFeedLoader(store: store)
+        
+        var capturedError: Error?
+        sut.save() { error in
+            capturedError = error
+        }
+        
+        store.completeWith(deletionError: deletionError)
+        
+        XCTAssertEqual(capturedError as NSError?, deletionError)
+    }
+    
+    // MARK:- Helpers
+    
+    private func anyNSError() -> NSError {
+        NSError(domain: "a domain error", code: 1, userInfo: nil)
     }
 }
