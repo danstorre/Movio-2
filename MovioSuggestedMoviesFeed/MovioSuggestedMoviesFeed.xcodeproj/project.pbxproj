@@ -13,7 +13,7 @@
 		1A5E4950268BBEF800A115C0 /* MovioSuggestedMoviesFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5E4946268BBEF700A115C0 /* MovioSuggestedMoviesFeed.framework */; };
 		1A5E4961268BBF1500A115C0 /* FeedSuggestedMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4960268BBF1500A115C0 /* FeedSuggestedMovie.swift */; };
 		1A5E4963268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4962268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift */; };
-		1A5E4966268CDE2200A115C0 /* RemoteLoadFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4965268CDE2200A115C0 /* RemoteLoadFeedTests.swift */; };
+		1A5E4966268CDE2200A115C0 /* LoadFeedFromRemoteUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4965268CDE2200A115C0 /* LoadFeedFromRemoteUseCaseTests.swift */; };
 		1A5E4969268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4968268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift */; };
 		1A672C3426C1CCC900B3656A /* XCTesting+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A672C3326C1CCC900B3656A /* XCTesting+MemoryLeakTracking.swift */; };
 		1A672C3C26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A672C3B26C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.swift */; };
@@ -48,7 +48,7 @@
 		1A5E4956268BBEF800A115C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A5E4960268BBF1500A115C0 /* FeedSuggestedMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSuggestedMovie.swift; sourceTree = "<group>"; };
 		1A5E4962268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSuggestedMoviesLoader.swift; sourceTree = "<group>"; };
-		1A5E4965268CDE2200A115C0 /* RemoteLoadFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLoadFeedTests.swift; sourceTree = "<group>"; };
+		1A5E4965268CDE2200A115C0 /* LoadFeedFromRemoteUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFeedFromRemoteUseCaseTests.swift; sourceTree = "<group>"; };
 		1A5E4968268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedSuggestedMoviesLoader.swift; sourceTree = "<group>"; };
 		1A672C3326C1CCC900B3656A /* XCTesting+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTesting+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		1A672C3926C1CDF500B3656A /* MovioSuggestedMoviesEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovioSuggestedMoviesEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,7 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				1A672C3226C1CCB400B3656A /* Helpers */,
-				1A5E4965268CDE2200A115C0 /* RemoteLoadFeedTests.swift */,
+				1A5E4965268CDE2200A115C0 /* LoadFeedFromRemoteUseCaseTests.swift */,
 				1A5E4956268BBEF800A115C0 /* Info.plist */,
 				1A3A80D126B3499E00AC23C2 /* HTTPSessionHTTPClientTests.swift */,
 			);
@@ -314,7 +314,7 @@
 			files = (
 				1A672C3426C1CCC900B3656A /* XCTesting+MemoryLeakTracking.swift in Sources */,
 				1A3A80D226B3499E00AC23C2 /* HTTPSessionHTTPClientTests.swift in Sources */,
-				1A5E4966268CDE2200A115C0 /* RemoteLoadFeedTests.swift in Sources */,
+				1A5E4966268CDE2200A115C0 /* LoadFeedFromRemoteUseCaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

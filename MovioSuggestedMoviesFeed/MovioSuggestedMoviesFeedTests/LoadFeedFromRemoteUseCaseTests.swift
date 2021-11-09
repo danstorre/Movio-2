@@ -2,7 +2,7 @@
 import XCTest
 import MovioSuggestedMoviesFeed
 
-class RemoteLoadFeedTests: XCTestCase {
+class LoadFeedFromRemoteUseCaseTests: XCTestCase {
 
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
@@ -10,7 +10,7 @@ class RemoteLoadFeedTests: XCTestCase {
         XCTAssert(client.requestedURLs.isEmpty)
     }
     
-    func test_load_clienRequestsDataFromURL() {
+    func test_load_clientRequestsDataFromURL() {
         let url = URL(string: "https://another-url.com")!
         let (sut, client) = makeSUT(url: url)
         
@@ -19,7 +19,7 @@ class RemoteLoadFeedTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [url])
     }
     
-    func test_load_twice_clienRequestsDataFromURLTwice() {
+    func test_load_twice_clientRequestsDataFromURLTwice() {
         let url = URL(string: "https://yet-another-url.com")!
         let (sut, client) = makeSUT(url: url)
         
