@@ -117,10 +117,10 @@
 		1A5E4953268BBEF800A115C0 /* MovioSuggestedMoviesFeedTests */ = {
 			isa = PBXGroup;
 			children = (
+				1A9E7759273AA92900AB2ADD /* Feed Cache */,
+				1A9E7758273AA91E00AB2ADD /* Feed API */,
 				1A672C3226C1CCB400B3656A /* Helpers */,
-				1A5E4965268CDE2200A115C0 /* LoadFeedFromRemoteUseCaseTests.swift */,
 				1A5E4956268BBEF800A115C0 /* Info.plist */,
-				1A3A80D126B3499E00AC23C2 /* HTTPSessionHTTPClientTests.swift */,
 			);
 			path = MovioSuggestedMoviesFeedTests;
 			sourceTree = "<group>";
@@ -160,6 +160,22 @@
 				1A672C3D26C1CDF500B3656A /* Info.plist */,
 			);
 			path = MovioSuggestedMoviesEndToEndTests;
+			sourceTree = "<group>";
+		};
+		1A9E7758273AA91E00AB2ADD /* Feed API */ = {
+			isa = PBXGroup;
+			children = (
+				1A5E4965268CDE2200A115C0 /* LoadFeedFromRemoteUseCaseTests.swift */,
+				1A3A80D126B3499E00AC23C2 /* HTTPSessionHTTPClientTests.swift */,
+			);
+			path = "Feed API";
+			sourceTree = "<group>";
+		};
+		1A9E7759273AA92900AB2ADD /* Feed Cache */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Feed Cache";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
