@@ -51,8 +51,7 @@ class CacheFeedUseCaseTests: XCTestCase {
     
     func test_save_deliversErrorOnDeletionError() {
         let deletionError = anyNSError()
-        let store = FeedStore()
-        let sut = LocalFeedLoader(store: store)
+        let (sut, store) = makeSUT()
         let items = [uniqueItem(), uniqueItem()]
         
         var capturedError: Error?
