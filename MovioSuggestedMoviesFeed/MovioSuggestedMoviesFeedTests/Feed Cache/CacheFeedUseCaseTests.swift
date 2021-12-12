@@ -1,5 +1,6 @@
 
 import XCTest
+import MovioSuggestedMoviesFeed
 
 class LocalFeedLoader {
     private let store: FeedStore
@@ -8,7 +9,7 @@ class LocalFeedLoader {
         self.store = store
     }
     
-    func save(completion: @escaping (Error?) -> Void) {
+    func save(_ items: [FeedSuggestedMovie], completion: @escaping (Error?) -> Void) {
         store.deleteCache(completion: completion)
     }
 }
@@ -43,8 +44,9 @@ class CacheFeedUseCaseTests: XCTestCase {
     func test_save_deletesTheOldCacheFromFeedStore() {
         let store = FeedStore()
         let sut = LocalFeedLoader(store: store)
+        let items = [uniqueItem(), uniqueItem()]
         
-        sut.save() { _ in}
+        sut.save(items) { _ in }
         
         XCTAssertEqual(store.deleteMessagesCount, 1)
     }
@@ -53,9 +55,10 @@ class CacheFeedUseCaseTests: XCTestCase {
         let deletionError = anyNSError()
         let store = FeedStore()
         let sut = LocalFeedLoader(store: store)
+        let items = [uniqueItem(), uniqueItem()]
         
         var capturedError: Error?
-        sut.save() { error in
+        sut.save(items) { error in
             capturedError = error
         }
         
@@ -65,6 +68,16 @@ class CacheFeedUseCaseTests: XCTestCase {
     }
     
     // MARK:- Helpers
+    private func uniqueItem() -> FeedSuggestedMovie {
+        return FeedSuggestedMovie(id: UUID(),
+                                  title: "any",
+                                  plot: "any",
+                                  poster: anyURL())
+    }
+    
+    private func anyURL() -> URL {
+        URL(string: "http://a-url.com")!
+    }
     
     private func anyNSError() -> NSError {
         NSError(domain: "a domain error", code: 1, userInfo: nil)
