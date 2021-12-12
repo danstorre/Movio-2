@@ -35,16 +35,14 @@ class FeedStore {
 class CacheFeedUseCaseTests: XCTestCase {
 
     func test_init_doesNotDeleteTheCacheUponCreation() {
-        let store = FeedStore()
-        let _ = LocalFeedLoader(store: store)
+        let (_, store) = makeSUT()
         
         XCTAssertEqual(store.deleteMessagesCount, 0)
     }
     
     func test_save_deletesTheOldCacheFromFeedStore() {
-        let store = FeedStore()
-        let sut = LocalFeedLoader(store: store)
         let items = [uniqueItem(), uniqueItem()]
+        let (sut, store) = makeSUT()
         
         sut.save(items) { _ in }
         
@@ -68,6 +66,13 @@ class CacheFeedUseCaseTests: XCTestCase {
     }
     
     // MARK:- Helpers
+    private func makeSUT() -> (sut: LocalFeedLoader, store: FeedStore) {
+        let store = FeedStore()
+        let sut = LocalFeedLoader(store: store)
+        
+        return (sut, store)
+    }
+    
     private func uniqueItem() -> FeedSuggestedMovie {
         return FeedSuggestedMovie(id: UUID(),
                                   title: "any",
