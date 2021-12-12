@@ -18,6 +18,7 @@ class FeedStore {
     typealias DeletionCacheCompletion = (Error?) -> Void
     
     var deleteMessagesCount = 0
+    var insertCallCount = 0
     
     private var deleteCompletions = [DeletionCacheCompletion]()
     
@@ -62,6 +63,17 @@ class CacheFeedUseCaseTests: XCTestCase {
         store.completeWith(deletionError: deletionError)
         
         XCTAssertEqual(capturedError as NSError?, deletionError)
+    }
+    
+    func test_save_doesNotInsertItemsOnDeletionError() {
+        let items = [uniqueItem(), uniqueItem()]
+        let (sut, store) = makeSUT()
+        let deletionError = anyNSError()
+        
+        sut.save(items) { _ in }
+        store.completeWith(deletionError: deletionError)
+        
+        XCTAssertEqual(store.insertCallCount, 0)
     }
     
     // MARK:- Helpers
