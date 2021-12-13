@@ -75,13 +75,16 @@ class CacheFeedUseCaseTests: XCTestCase {
         let deletionError = anyNSError()
         let (sut, store) = makeSUT()
         let items = [uniqueItem(), uniqueItem()]
+        let exp = expectation(description: "wait for deletion to finish.")
         
         var capturedError: Error?
         sut.save(items) { error in
             capturedError = error
+            exp.fulfill()
         }
         
         store.completeWith(deletionError: deletionError)
+        wait(for: [exp], timeout: 1.0)
         
         XCTAssertEqual(capturedError as NSError?, deletionError)
     }
