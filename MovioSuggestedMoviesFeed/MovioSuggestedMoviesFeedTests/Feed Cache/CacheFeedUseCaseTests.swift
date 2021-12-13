@@ -18,15 +18,17 @@ class LocalFeedLoader {
                 return
             }
             
-            self.store.insert(items: items, timestamp: self.currentDate())
+            self.store.insert(items: items, timestamp: self.currentDate(), completion: completion)
         }
     }
 }
 
 class FeedStore {
     typealias DeletionCacheCompletion = (Error?) -> Void
+    typealias InsertionCacheCompletion = (Error?) -> Void
         
     private var deleteCompletions = [DeletionCacheCompletion]()
+    private var insertCompletions = [InsertionCacheCompletion]()
     
     enum AllMessages: Equatable {
         case deletion
@@ -49,8 +51,14 @@ class FeedStore {
         deleteCompletions[index](nil)
     }
     
-    func insert(items: [FeedSuggestedMovie], timestamp: Date) {
+    func insert(items: [FeedSuggestedMovie], timestamp: Date, completion: @escaping InsertionCacheCompletion) {
         receivedMessages.append(.insertion(items, timestamp))
+        
+        insertCompletions.append(completion)
+    }
+    
+    func completeWith(insertionError: Error, at index: Int = 0) {
+        insertCompletions[index](insertionError)
     }
 }
 
@@ -109,6 +117,26 @@ class CacheFeedUseCaseTests: XCTestCase {
         store.completeDeletionSuccessfully()
         
         XCTAssertEqual(store.receivedMessages, [.deletion, .insertion(items, timestamp)])
+    }
+    
+    func test_save_failsOnInsertionError() {
+        let items = [uniqueItem(), uniqueItem()]
+        let timestamp = Date()
+        let (sut, store) = makeSUT(currentDate: { timestamp })
+        let insertionError = anyNSError()
+        let exp = expectation(description: "Wait for save command to finish")
+        
+        var receivedError: Error?
+        sut.save(items) { error in
+            receivedError = error
+            exp.fulfill()
+        }
+        
+        store.completeDeletionSuccessfully()
+        store.completeWith(insertionError: insertionError)
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(receivedError as NSError?, insertionError)
     }
     
     // MARK:- Helpers
