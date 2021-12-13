@@ -97,16 +97,6 @@ class CacheFeedUseCaseTests: XCTestCase {
         XCTAssertEqual(store.insertCallCount, 0)
     }
     
-    func test_save_requestsNewCacheInsertionOnSuccessfulDeletion() {
-        let items = [uniqueItem(), uniqueItem()]
-        let (sut, store) = makeSUT()
-        
-        sut.save(items) { _ in }
-        store.completeDeletionSuccessfully()
-        
-        XCTAssertEqual(store.insertCallCount, 1)
-    }
-    
     func test_save_requestsNewCacheInsertionWithTimestampOnSuccessfulDeletion() {
         let items = [uniqueItem(), uniqueItem()]
         let timestamp = Date()
