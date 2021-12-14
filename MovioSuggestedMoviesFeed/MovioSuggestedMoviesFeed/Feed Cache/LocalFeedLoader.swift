@@ -11,7 +11,11 @@ public class LocalFeedLoader {
     }
     
     public func save(_ items: [FeedSuggestedMovie], completion: @escaping (Error?) -> Void) {
-        store.deleteCache { [unowned self] error in
+        store.deleteCache { [weak self] error in
+            guard let self = self else {
+                return
+            }
+            
             guard error == nil else {
                 completion(error)
                 return
