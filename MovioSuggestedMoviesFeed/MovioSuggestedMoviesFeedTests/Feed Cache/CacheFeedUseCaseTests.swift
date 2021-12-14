@@ -31,46 +31,6 @@ protocol FeedStore {
     func insert(items: [FeedSuggestedMovie], timestamp: Date, completion: @escaping InsertionCacheCompletion)
 }
 
-class FeedStoreSpy: FeedStore {
-    private var deleteCompletions = [DeletionCacheCompletion]()
-    private var insertCompletions = [InsertionCacheCompletion]()
-    
-    enum AllMessages: Equatable {
-        case deletion
-        case insertion([FeedSuggestedMovie], Date)
-    }
-    
-    private(set) var receivedMessages = [AllMessages]()
-    
-    func deleteCache(completion: @escaping DeletionCacheCompletion) {
-        receivedMessages.append(.deletion)
-        
-        deleteCompletions.append(completion)
-    }
-    
-    func completeWith(deletionError: NSError, at index: Int = 0) {
-        deleteCompletions[index](deletionError)
-    }
-    
-    func completeDeletionSuccessfully(at index: Int = 0) {
-        deleteCompletions[index](nil)
-    }
-    
-    func insert(items: [FeedSuggestedMovie], timestamp: Date, completion: @escaping InsertionCacheCompletion) {
-        receivedMessages.append(.insertion(items, timestamp))
-        
-        insertCompletions.append(completion)
-    }
-    
-    func completeWith(insertionError: Error, at index: Int = 0) {
-        insertCompletions[index](insertionError)
-    }
-    
-    func completeInsertionSuccessfully(at index: Int = 0) {
-        insertCompletions[index](nil)
-    }
-}
-
 class CacheFeedUseCaseTests: XCTestCase {
 
     func test_init_doesNotMessageTheStoreCacheUponCreation() {
@@ -178,5 +138,45 @@ class CacheFeedUseCaseTests: XCTestCase {
     
     private func anyNSError() -> NSError {
         NSError(domain: "a domain error", code: 1, userInfo: nil)
+    }
+    
+    private class FeedStoreSpy: FeedStore {
+        private var deleteCompletions = [DeletionCacheCompletion]()
+        private var insertCompletions = [InsertionCacheCompletion]()
+        
+        enum AllMessages: Equatable {
+            case deletion
+            case insertion([FeedSuggestedMovie], Date)
+        }
+        
+        private(set) var receivedMessages = [AllMessages]()
+        
+        func deleteCache(completion: @escaping DeletionCacheCompletion) {
+            receivedMessages.append(.deletion)
+            
+            deleteCompletions.append(completion)
+        }
+        
+        func completeWith(deletionError: NSError, at index: Int = 0) {
+            deleteCompletions[index](deletionError)
+        }
+        
+        func completeDeletionSuccessfully(at index: Int = 0) {
+            deleteCompletions[index](nil)
+        }
+        
+        func insert(items: [FeedSuggestedMovie], timestamp: Date, completion: @escaping InsertionCacheCompletion) {
+            receivedMessages.append(.insertion(items, timestamp))
+            
+            insertCompletions.append(completion)
+        }
+        
+        func completeWith(insertionError: Error, at index: Int = 0) {
+            insertCompletions[index](insertionError)
+        }
+        
+        func completeInsertionSuccessfully(at index: Int = 0) {
+            insertCompletions[index](nil)
+        }
     }
 }
