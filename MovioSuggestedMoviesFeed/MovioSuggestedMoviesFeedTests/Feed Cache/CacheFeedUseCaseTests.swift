@@ -2,35 +2,6 @@
 import XCTest
 import MovioSuggestedMoviesFeed
 
-class LocalFeedLoader {
-    private let store: FeedStore
-    private let currentDate: () -> Date
-    
-    init(store: FeedStore, currentDate: @escaping () -> Date) {
-        self.store = store
-        self.currentDate = currentDate
-    }
-    
-    func save(_ items: [FeedSuggestedMovie], completion: @escaping (Error?) -> Void) {
-        store.deleteCache { [unowned self] error in
-            guard error == nil else {
-                completion(error)
-                return
-            }
-            
-            self.store.insert(items: items, timestamp: self.currentDate(), completion: completion)
-        }
-    }
-}
-
-protocol FeedStore {
-    typealias DeletionCacheCompletion = (Error?) -> Void
-    typealias InsertionCacheCompletion = (Error?) -> Void
-    
-    func deleteCache(completion: @escaping DeletionCacheCompletion)
-    func insert(items: [FeedSuggestedMovie], timestamp: Date, completion: @escaping InsertionCacheCompletion)
-}
-
 class CacheFeedUseCaseTests: XCTestCase {
 
     func test_init_doesNotMessageTheStoreCacheUponCreation() {
