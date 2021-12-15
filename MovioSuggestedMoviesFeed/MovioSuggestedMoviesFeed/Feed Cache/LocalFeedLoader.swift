@@ -21,7 +21,12 @@ public class LocalFeedLoader {
                 return
             }
             
-            self.store.insert(items: items, timestamp: self.currentDate(), completion: completion)
+            self.store.insert(items: items, timestamp: self.currentDate(), completion: { [weak self] insertionError in
+                guard self != nil else {
+                    return
+                }
+                completion(insertionError)
+            })
         }
     }
 }

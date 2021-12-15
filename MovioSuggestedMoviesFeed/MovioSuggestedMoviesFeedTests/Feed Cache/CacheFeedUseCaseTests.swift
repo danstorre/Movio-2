@@ -87,6 +87,23 @@ class CacheFeedUseCaseTests: XCTestCase {
         XCTAssertTrue(receivedResults.isEmpty)
     }
     
+    func test_save_doesNotDeliverInsertionErrorAfterSUTHasBeenDeallocated() {
+        let items = [uniqueItem(), uniqueItem()]
+        let timestamp = Date()
+        let store = FeedStoreSpy()
+        var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: { timestamp })
+        let insertionError = anyNSError()
+        
+        var receivedResults = [Error?]()
+        sut?.save(items) { receivedResults.append($0) }
+        
+        store.completeDeletionSuccessfully()
+        sut = nil
+        store.completeWith(insertionError: insertionError)
+        
+        XCTAssertTrue(receivedResults.isEmpty)
+    }
+    
     // MARK:- Helpers
     private func expect(sut: LocalFeedLoader, toCompleteWith expectedError: NSError?, when action: () -> Void) {
         let items = [uniqueItem(), uniqueItem()]
