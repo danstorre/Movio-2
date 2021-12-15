@@ -19,10 +19,14 @@ public class LocalFeedLoader {
                 return
             }
             
-            self.store.insert(items: items, timestamp: self.currentDate(), completion: { [weak self] cacheInsertionError in
-                guard self != nil else { return }
-                completion(cacheInsertionError)
-            })
+            self.cache(items: items, completion: completion)
         }
+    }
+    
+    private func cache(items: [FeedSuggestedMovie], completion: @escaping (Error?) -> Void) {
+        store.insert(items: items, timestamp: currentDate(), completion: { [weak self] cacheInsertionError in
+            guard self != nil else { return }
+            completion(cacheInsertionError)
+        })
     }
 }
