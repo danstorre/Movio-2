@@ -78,7 +78,7 @@ class CacheFeedUseCaseTests: XCTestCase {
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: { timestamp })
         let deletionError = anyNSError()
         
-        var receivedResults = [Error?]()
+        var receivedResults = [LocalFeedLoader.SaveResult]()
         sut?.save(items) { receivedResults.append($0) }
         sut = nil
         
@@ -94,7 +94,7 @@ class CacheFeedUseCaseTests: XCTestCase {
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: { timestamp })
         let insertionError = anyNSError()
         
-        var receivedResults = [Error?]()
+        var receivedResults = [LocalFeedLoader.SaveResult]()
         sut?.save(items) { receivedResults.append($0) }
         
         store.completeDeletionSuccessfully()
