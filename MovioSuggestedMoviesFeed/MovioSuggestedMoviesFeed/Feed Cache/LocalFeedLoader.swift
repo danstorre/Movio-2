@@ -11,21 +11,17 @@ public class LocalFeedLoader {
     }
     
     public func save(_ items: [FeedSuggestedMovie], completion: @escaping (Error?) -> Void) {
-        store.deleteCache { [weak self] error in
-            guard let self = self else {
+        store.deleteCache { [weak self] cacheDeletionError in
+            guard let self = self else { return }
+            
+            guard cacheDeletionError == nil else {
+                completion(cacheDeletionError)
                 return
             }
             
-            guard error == nil else {
-                completion(error)
-                return
-            }
-            
-            self.store.insert(items: items, timestamp: self.currentDate(), completion: { [weak self] insertionError in
-                guard self != nil else {
-                    return
-                }
-                completion(insertionError)
+            self.store.insert(items: items, timestamp: self.currentDate(), completion: { [weak self] cacheInsertionError in
+                guard self != nil else { return }
+                completion(cacheInsertionError)
             })
         }
     }
