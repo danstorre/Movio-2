@@ -40,14 +40,14 @@ class CacheFeedUseCaseTests: XCTestCase {
     }
     
     func test_save_requestsNewCacheInsertionWithTimestampOnSuccessfulDeletion() {
-        let items = [uniqueItem(), uniqueItem()]
+        let uniqueItems = uniqueItems()
         let timestamp = Date()
         let (sut, store) = makeSUT(currentDate: { timestamp })
         
-        sut.save(items) { _ in }
+        sut.save(uniqueItems.model) { _ in }
         store.completeDeletionSuccessfully()
         
-        XCTAssertEqual(store.receivedMessages, [.deletion, .insertion(items, timestamp)])
+        XCTAssertEqual(store.receivedMessages, [.deletion, .insertion(uniqueItems.local, timestamp)])
     }
     
     func test_save_failsOnInsertionError() {
@@ -129,6 +129,13 @@ class CacheFeedUseCaseTests: XCTestCase {
         return (sut, store)
     }
     
+    private func uniqueItems() -> (model: [FeedSuggestedMovie], local: [LocalFeedSuggestedMovie]) {
+        let model = [uniqueItem(), uniqueItem()]
+        let local = model.map { LocalFeedSuggestedMovie(id: $0.id, title: $0.title, plot: $0.plot, poster: $0.poster) }
+        
+        return (model, local)
+    }
+    
     private func uniqueItem() -> FeedSuggestedMovie {
         return FeedSuggestedMovie(id: UUID(),
                                   title: "any",
@@ -150,7 +157,7 @@ class CacheFeedUseCaseTests: XCTestCase {
         
         enum AllMessages: Equatable {
             case deletion
-            case insertion([FeedSuggestedMovie], Date)
+            case insertion([LocalFeedSuggestedMovie], Date)
         }
         
         private(set) var receivedMessages = [AllMessages]()
@@ -169,7 +176,7 @@ class CacheFeedUseCaseTests: XCTestCase {
             deleteCompletions[index](nil)
         }
         
-        func insert(items: [FeedSuggestedMovie], timestamp: Date, completion: @escaping InsertionCacheCompletion) {
+        func insert(items: [LocalFeedSuggestedMovie], timestamp: Date, completion: @escaping InsertionCacheCompletion) {
             receivedMessages.append(.insertion(items, timestamp))
             
             insertCompletions.append(completion)
