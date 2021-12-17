@@ -23,6 +23,7 @@
 		1ABDAD662768C83600392CC1 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDAD652768C83600392CC1 /* FeedStore.swift */; };
 		1ABDAD682768C84600392CC1 /* LocalFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDAD672768C84600392CC1 /* LocalFeedLoader.swift */; };
 		1AD8B22A276CC6EA00A5E851 /* LocalFeedSuggestedMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD8B229276CC6EA00A5E851 /* LocalFeedSuggestedMovie.swift */; };
+		1AD8B22C276CC90100A5E851 /* RemoteFeedSuggestedMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD8B22B276CC90100A5E851 /* RemoteFeedSuggestedMovie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		1ABDAD652768C83600392CC1 /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		1ABDAD672768C84600392CC1 /* LocalFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedLoader.swift; sourceTree = "<group>"; };
 		1AD8B229276CC6EA00A5E851 /* LocalFeedSuggestedMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedSuggestedMovie.swift; sourceTree = "<group>"; };
+		1AD8B22B276CC90100A5E851 /* RemoteFeedSuggestedMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedSuggestedMovie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				1A20A23E2693340400BB3E91 /* RemoteFeedSuggestedMoviesParser.swift */,
 				1A20A2402693349600BB3E91 /* HTTPClient.swift */,
 				1A672C4426C1CE7F00B3656A /* URLSessionHTTPClient.swift */,
+				1AD8B22B276CC90100A5E851 /* RemoteFeedSuggestedMovie.swift */,
 			);
 			path = "Feed API";
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				1AD8B22A276CC6EA00A5E851 /* LocalFeedSuggestedMovie.swift in Sources */,
 				1A20A2412693349600BB3E91 /* HTTPClient.swift in Sources */,
 				1A5E4961268BBF1500A115C0 /* FeedSuggestedMovie.swift in Sources */,
+				1AD8B22C276CC90100A5E851 /* RemoteFeedSuggestedMovie.swift in Sources */,
 				1A5E4963268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift in Sources */,
 				1ABDAD662768C83600392CC1 /* FeedStore.swift in Sources */,
 				1A20A23F2693340400BB3E91 /* RemoteFeedSuggestedMoviesParser.swift in Sources */,
