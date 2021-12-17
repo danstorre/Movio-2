@@ -22,6 +22,7 @@
 		1A9E775B273AA94D00AB2ADD /* CacheFeedUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9E775A273AA94D00AB2ADD /* CacheFeedUseCaseTests.swift */; };
 		1ABDAD662768C83600392CC1 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDAD652768C83600392CC1 /* FeedStore.swift */; };
 		1ABDAD682768C84600392CC1 /* LocalFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDAD672768C84600392CC1 /* LocalFeedLoader.swift */; };
+		1AD8B22A276CC6EA00A5E851 /* LocalFeedSuggestedMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD8B229276CC6EA00A5E851 /* LocalFeedSuggestedMovie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		1A9E775A273AA94D00AB2ADD /* CacheFeedUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheFeedUseCaseTests.swift; sourceTree = "<group>"; };
 		1ABDAD652768C83600392CC1 /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		1ABDAD672768C84600392CC1 /* LocalFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedLoader.swift; sourceTree = "<group>"; };
+		1AD8B229276CC6EA00A5E851 /* LocalFeedSuggestedMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedSuggestedMovie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 			children = (
 				1ABDAD652768C83600392CC1 /* FeedStore.swift */,
 				1ABDAD672768C84600392CC1 /* LocalFeedLoader.swift */,
+				1AD8B229276CC6EA00A5E851 /* LocalFeedSuggestedMovie.swift */,
 			);
 			path = "Feed Cache";
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A5E4969268D2AE500A115C0 /* RemoteFeedSuggestedMoviesLoader.swift in Sources */,
+				1AD8B22A276CC6EA00A5E851 /* LocalFeedSuggestedMovie.swift in Sources */,
 				1A20A2412693349600BB3E91 /* HTTPClient.swift in Sources */,
 				1A5E4961268BBF1500A115C0 /* FeedSuggestedMovie.swift in Sources */,
 				1A5E4963268BBF7A00A115C0 /* FeedSuggestedMoviesLoader.swift in Sources */,
