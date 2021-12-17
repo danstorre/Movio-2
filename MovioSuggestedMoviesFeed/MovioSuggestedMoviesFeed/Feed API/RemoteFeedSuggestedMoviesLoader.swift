@@ -23,10 +23,21 @@ public final class RemoteFeedSuggestedMoviesLoader: FeedSuggestedMoviesLoader {
             
             switch result {
             case let .success(response: response, data: data):
-                RemoteFeedSuggestedMoviesParser.map(response: response, data: data, completion: completion)
+                do {
+                    let remoteItems = try RemoteFeedSuggestedMoviesParser.map(response: response, data: data)
+                    completion(.success(remoteItems.toFeed()))
+                } catch {
+                    completion(.failure(error))
+                }
             case .failure:
                 completion(.failure(Error.noConnectivity))
             }
         }
+    }
+}
+
+private extension Array where Element == RemoteFeedSuggestedMovie {
+    func toFeed() -> [FeedSuggestedMovie] {
+        map { FeedSuggestedMovie(id: $0.id, title: $0.title, plot: $0.plot, poster: $0.poster) }
     }
 }
