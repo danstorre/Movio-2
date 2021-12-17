@@ -6,11 +6,11 @@ class MovioSuggestedMoviesEndToEndTests: XCTestCase {
 
     func test_endToEndServerGETSuggestedMoviesResult_matchesTheMoviesTestData () {
         switch suggestedMoviesResult() {
-        case let .success(items)?:
-            XCTAssertEqual(items.count, 2)
+        case let .success(feed)?:
+            XCTAssertEqual(feed.count, 2)
             
-            XCTAssertEqual(items[0], expectedItem(at: 0))
-            XCTAssertEqual(items[1], expectedItem(at: 1))
+            XCTAssertEqual(feed[0], expectedFeedSuggestedMovie(at: 0))
+            XCTAssertEqual(feed[1], expectedFeedSuggestedMovie(at: 1))
             
         case let .failure(error)?:
             XCTFail("Expected result to be successful, got \(error) instead")
@@ -37,7 +37,7 @@ class MovioSuggestedMoviesEndToEndTests: XCTestCase {
         return receivedResult
     }
     
-    private func expectedItem(at index: Int) -> FeedSuggestedMovie {
+    private func expectedFeedSuggestedMovie(at index: Int) -> FeedSuggestedMovie {
         FeedSuggestedMovie(id: id(at: index),
                            title: title(at: index),
                            plot: plot(at: index),

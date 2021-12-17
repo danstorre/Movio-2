@@ -11,10 +11,10 @@ class CacheFeedUseCaseTests: XCTestCase {
     }
     
     func test_save_deletesTheOldCacheFromFeedStore() {
-        let items = [uniqueItem(), uniqueItem()]
+        let feed = [uniqueFeedSuggestedMovie(), uniqueFeedSuggestedMovie()]
         let (sut, store) = makeSUT()
         
-        sut.save(items) { _ in }
+        sut.save(feed) { _ in }
         
         XCTAssertEqual(store.receivedMessages, [.deletion])
     }
@@ -28,26 +28,26 @@ class CacheFeedUseCaseTests: XCTestCase {
         })
     }
     
-    func test_save_doesNotInsertItemsOnDeletionError() {
-        let items = [uniqueItem(), uniqueItem()]
+    func test_save_doesNotInsertFeedOnDeletionError() {
+        let feed = [uniqueFeedSuggestedMovie(), uniqueFeedSuggestedMovie()]
         let (sut, store) = makeSUT()
         let deletionError = anyNSError()
         
-        sut.save(items) { _ in }
+        sut.save(feed) { _ in }
         store.completeWith(deletionError: deletionError)
         
         XCTAssertEqual(store.receivedMessages, [.deletion])
     }
     
     func test_save_requestsNewCacheInsertionWithTimestampOnSuccessfulDeletion() {
-        let uniqueItems = uniqueItems()
+        let uniqueFeed = uniqueFeed()
         let timestamp = Date()
         let (sut, store) = makeSUT(currentDate: { timestamp })
         
-        sut.save(uniqueItems.model) { _ in }
+        sut.save(uniqueFeed.model) { _ in }
         store.completeDeletionSuccessfully()
         
-        XCTAssertEqual(store.receivedMessages, [.deletion, .insertion(uniqueItems.local, timestamp)])
+        XCTAssertEqual(store.receivedMessages, [.deletion, .insertion(uniqueFeed.local, timestamp)])
     }
     
     func test_save_failsOnInsertionError() {
@@ -72,14 +72,14 @@ class CacheFeedUseCaseTests: XCTestCase {
     }
     
     func test_save_doesNotDeliverDeletionErrorAfterSUTHasBeenDeallocated() {
-        let items = [uniqueItem(), uniqueItem()]
+        let feed = [uniqueFeedSuggestedMovie(), uniqueFeedSuggestedMovie()]
         let timestamp = Date()
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: { timestamp })
         let deletionError = anyNSError()
         
         var receivedResults = [LocalFeedLoader.SaveResult]()
-        sut?.save(items) { receivedResults.append($0) }
+        sut?.save(feed) { receivedResults.append($0) }
         sut = nil
         
         store.completeWith(deletionError: deletionError)
@@ -88,14 +88,14 @@ class CacheFeedUseCaseTests: XCTestCase {
     }
     
     func test_save_doesNotDeliverInsertionErrorAfterSUTHasBeenDeallocated() {
-        let items = [uniqueItem(), uniqueItem()]
+        let feed = [uniqueFeedSuggestedMovie(), uniqueFeedSuggestedMovie()]
         let timestamp = Date()
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: { timestamp })
         let insertionError = anyNSError()
         
         var receivedResults = [LocalFeedLoader.SaveResult]()
-        sut?.save(items) { receivedResults.append($0) }
+        sut?.save(feed) { receivedResults.append($0) }
         
         store.completeDeletionSuccessfully()
         sut = nil
@@ -106,11 +106,11 @@ class CacheFeedUseCaseTests: XCTestCase {
     
     // MARK:- Helpers
     private func expect(sut: LocalFeedLoader, toCompleteWith expectedError: NSError?, when action: () -> Void) {
-        let items = [uniqueItem(), uniqueItem()]
+        let feed = [uniqueFeedSuggestedMovie(), uniqueFeedSuggestedMovie()]
         var receivedError: Error?
         let exp = expectation(description: "Wait for save command to finish")
         
-        sut.save(items) { error in
+        sut.save(feed) { error in
             receivedError = error
             exp.fulfill()
         }
@@ -129,14 +129,14 @@ class CacheFeedUseCaseTests: XCTestCase {
         return (sut, store)
     }
     
-    private func uniqueItems() -> (model: [FeedSuggestedMovie], local: [LocalFeedSuggestedMovie]) {
-        let model = [uniqueItem(), uniqueItem()]
+    private func uniqueFeed() -> (model: [FeedSuggestedMovie], local: [LocalFeedSuggestedMovie]) {
+        let model = [uniqueFeedSuggestedMovie(), uniqueFeedSuggestedMovie()]
         let local = model.map { LocalFeedSuggestedMovie(id: $0.id, title: $0.title, plot: $0.plot, poster: $0.poster) }
         
         return (model, local)
     }
     
-    private func uniqueItem() -> FeedSuggestedMovie {
+    private func uniqueFeedSuggestedMovie() -> FeedSuggestedMovie {
         return FeedSuggestedMovie(id: UUID(),
                                   title: "any",
                                   plot: "any",
@@ -176,8 +176,8 @@ class CacheFeedUseCaseTests: XCTestCase {
             deleteCompletions[index](nil)
         }
         
-        func insert(items: [LocalFeedSuggestedMovie], timestamp: Date, completion: @escaping InsertionCacheCompletion) {
-            receivedMessages.append(.insertion(items, timestamp))
+        func insert(feed: [LocalFeedSuggestedMovie], timestamp: Date, completion: @escaping InsertionCacheCompletion) {
+            receivedMessages.append(.insertion(feed, timestamp))
             
             insertCompletions.append(completion)
         }
