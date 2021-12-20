@@ -82,18 +82,18 @@ Then the app should display an error message
 1. Execute "Load Suggested Movies Feed" command with above data.
 2. System fetches feed data from cache.
 3. System validates the cache is less than seven days old.
-4. System creates feed items from cached data.
-5. System delivers feed items.
+4. System creates feed suggested movies from cached data.
+5. System delivers feed suggested movies.
 
 ### Error course course (sad path):
 1. System delivers error.
 
 ### Expired cache course (sad path):
 1. System deletes cache.
-2. System delivers no feed items.
+2. System delivers no feed suggested movies.
 
 #### No cache course (sad path):
-1. System delivers no feed items.
+1. System delivers no feed suggested movies.
 
 ---
 
@@ -103,9 +103,9 @@ Then the app should display an error message
 - Suggested Movies
 
 #### Primary course (happy path):
-1. Execute "Save Feed Items" command with above data.
+1. Execute "Save Feed suggested movies" command with above data.
 2. System deletes old cache.
-3. System encodes feed items.
+3. System encodes feed suggested movies.
 4. System timestamps the new cache.
 5. System saves new cache.
 6. System delivers a success message.
